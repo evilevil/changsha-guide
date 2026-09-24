@@ -1,0 +1,2273 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>杭州出发 · 长沙北辰洲际五日 · 2026.10.1–10.5</title>
+  <meta name="description" content="杭州东→长沙南11:50抵达，住北辰洲际。含高铁衔接、打卡机位配图、本地人吃饭避坑、高德天气与交通。">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    /* 现代化CSS变量系统 */
+    :root {
+      --primary: #f97316;
+      --secondary: #ec4899;
+      --accent: #10b981;
+      --success: #059669;
+      --warning: #d97706;
+      --error: #dc2626;
+      --bg-1: #0c0a09;
+      --bg-2: #1c1917;
+      --bg-3: #292524;
+      --text-1: #fafaf9;
+      --text-2: #d6d3d1;
+      --text-3: #a8a29e;
+      --glass: rgba(28, 25, 23, 0.7);
+      --glass-border: rgba(168, 162, 158, 0.1);
+      --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+      --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+      --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+      --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1);
+      --gradient-1: linear-gradient(135deg, #f97316 0%, #dc2626 100%);
+      --gradient-2: linear-gradient(135deg, #ec4899 0%, #8b5cf6 100%);
+    }
+
+    [data-theme="light"] {
+      --bg-1: #ffffff;
+      --bg-2: #fafaf9;
+      --bg-3: #f5f5f4;
+      --text-1: #1c1917;
+      --text-2: #44403c;
+      --text-3: #78716c;
+      --glass: rgba(255, 255, 255, 0.8);
+      --glass-border: rgba(168, 162, 158, 0.2);
+    }
+
+    /* 基础重置 */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      font-size: 16px;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg-1);
+      color: var(--text-1);
+      line-height: 1.6;
+      background-image: 
+        radial-gradient(circle at 25% 25%, rgba(249, 115, 22, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 75% 75%, rgba(236, 72, 153, 0.1) 0%, transparent 50%);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    /* 加载动画 */
+    .loading {
+      position: fixed;
+      inset: 0;
+      background: var(--bg-1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+      transition: opacity 0.5s ease;
+    }
+    .loading.fade-out { opacity: 0; pointer-events: none; }
+    .spinner {
+      width: 40px; height: 40px;
+      border: 3px solid var(--text-3);
+      border-top: 3px solid var(--primary);
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* 导航栏 */
+    .navbar {
+      position: fixed; top: 0; left: 0; right: 0;
+      background: var(--glass);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--glass-border);
+      z-index: 50;
+      transition: all 0.3s ease;
+    }
+    .navbar.scrolled {
+      background: var(--bg-2);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .nav-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 64px;
+    }
+
+    .nav-brand {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--primary);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 0.5rem;
+      list-style: none;
+    }
+
+    .nav-link {
+      padding: 0.5rem 1rem;
+      color: var(--text-2);
+      text-decoration: none;
+      border-radius: 0.5rem;
+      transition: all 0.2s ease;
+      font-weight: 500;
+      position: relative;
+    }
+
+    .nav-link:hover, .nav-link.active {
+      color: var(--primary);
+      background: var(--glass);
+    }
+
+    .nav-link.active::after {
+      content: '';
+      position: absolute;
+      bottom: -1px;
+      left: 50%;
+      width: 20px;
+      height: 2px;
+      background: var(--primary);
+      transform: translateX(-50%);
+    }
+
+    /* 工具栏 */
+    .toolbar {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .theme-toggle {
+      background: none;
+      border: none;
+      color: var(--text-2);
+      font-size: 1.25rem;
+      cursor: pointer;
+      padding: 0.5rem;
+      border-radius: 0.5rem;
+      transition: all 0.2s ease;
+    }
+
+    .theme-toggle:hover {
+      color: var(--primary);
+      background: var(--glass);
+    }
+
+    .search-container {
+      position: relative;
+    }
+
+    .search-input {
+      background: var(--glass);
+      border: 1px solid var(--glass-border);
+      border-radius: 0.5rem;
+      padding: 0.5rem 1rem 0.5rem 2.5rem;
+      color: var(--text-1);
+      font-size: 0.875rem;
+      width: 200px;
+      transition: all 0.2s ease;
+    }
+
+    .search-input:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.1);
+    }
+
+    .search-icon {
+      position: absolute;
+      left: 0.75rem;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-3);
+    }
+
+    /* 移动端 */
+    .mobile-menu-btn {
+      display: none;
+      background: none;
+      border: none;
+      color: var(--text-1);
+      font-size: 1.5rem;
+      cursor: pointer;
+      padding: 0.5rem;
+      border-radius: 0.5rem;
+    }
+
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .mobile-menu-btn { display: block; }
+      .search-input { width: 150px; }
+    }
+
+    /* 主内容 */
+    .main-content {
+      margin-top: 64px;
+      padding: 0 1rem;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    /* 英雄区域 */
+    .hero {
+      padding: 4rem 0;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: var(--gradient-1);
+      opacity: 0.1;
+      z-index: -1;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: var(--glass);
+      border: 1px solid var(--glass-border);
+      border-radius: 2rem;
+      padding: 0.5rem 1rem;
+      font-size: 0.875rem;
+      color: var(--primary);
+      margin-bottom: 1.5rem;
+      backdrop-filter: blur(10px);
+    }
+
+    .hero-title {
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      font-weight: 700;
+      line-height: 1.2;
+      margin-bottom: 1rem;
+      background: linear-gradient(135deg, var(--text-1) 0%, var(--primary) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero-subtitle {
+      font-size: 1.125rem;
+      color: var(--text-2);
+      margin-bottom: 2rem;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .hero-chips {
+      display: flex;
+      justify-content: center;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+      margin-bottom: 2rem;
+    }
+
+    .chip {
+      background: var(--glass);
+      border: 1px solid var(--glass-border);
+      border-radius: 1rem;
+      padding: 0.5rem 1rem;
+      font-size: 0.875rem;
+      color: var(--text-2);
+      backdrop-filter: blur(10px);
+      transition: all 0.2s ease;
+    }
+
+    .chip:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .hero-actions {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    /* 按钮系统 */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.75rem 1.5rem;
+      border-radius: 0.5rem;
+      text-decoration: none;
+      font-weight: 500;
+      transition: all 0.2s ease;
+      border: none;
+      cursor: pointer;
+      font-size: 0.875rem;
+    }
+
+    .btn-primary {
+      background: var(--gradient-1);
+      color: white;
+      box-shadow: var(--shadow-md);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .btn-secondary {
+      background: var(--glass);
+      color: var(--text-1);
+      border: 1px solid var(--glass-border);
+      backdrop-filter: blur(10px);
+    }
+
+    .btn-secondary:hover {
+      background: var(--bg-2);
+      transform: translateY(-2px);
+    }
+
+    /* 卡片系统 */
+    .card {
+      background: var(--glass);
+      border: 1px solid var(--glass-border);
+      border-radius: 1rem;
+      padding: 1.5rem;
+      backdrop-filter: blur(10px);
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--primary), transparent);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-xl);
+      border-color: var(--primary);
+    }
+
+    .card:hover::before {
+      opacity: 1;
+    }
+
+    .card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1rem;
+    }
+
+    .card-title {
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: var(--text-1);
+      margin: 0;
+    }
+
+    .card-badge {
+      background: var(--glass);
+      border: 1px solid var(--glass-border);
+      border-radius: 0.5rem;
+      padding: 0.25rem 0.75rem;
+      font-size: 0.75rem;
+      color: var(--text-3);
+    }
+
+    .card-content {
+      color: var(--text-2);
+      line-height: 1.6;
+    }
+
+    /* 网格布局 */
+    .grid {
+      display: grid;
+      gap: 1.5rem;
+    }
+
+    .grid-responsive {
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    }
+
+    .grid-2 { grid-template-columns: repeat(2, 1fr); }
+    .grid-3 { grid-template-columns: repeat(3, 1fr); }
+
+    @media (max-width: 768px) {
+      .grid-2, .grid-3 { grid-template-columns: 1fr; }
+    }
+
+    /* 章节样式 */
+    .section {
+      padding: 4rem 0;
+    }
+
+    .section-header {
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+
+    .section-title {
+      font-size: 2.5rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      color: var(--text-1);
+    }
+
+    .section-subtitle {
+      font-size: 1.125rem;
+      color: var(--text-2);
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    /* 时间轴 */
+    .timeline {
+      position: relative;
+      padding-left: 2rem;
+    }
+
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 0.5rem;
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      background: var(--gradient-1);
+    }
+
+    .timeline-item {
+      position: relative;
+      margin-bottom: 2rem;
+    }
+
+    .timeline-item::before {
+      content: '';
+      position: absolute;
+      left: -1.5rem;
+      top: 0.5rem;
+      width: 12px;
+      height: 12px;
+      background: var(--primary);
+      border-radius: 50%;
+      border: 3px solid var(--bg-1);
+    }
+
+    /* 浮动操作按钮 */
+    .fab-container {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      z-index: 40;
+    }
+
+    .fab {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background: var(--gradient-1);
+      color: white;
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.25rem;
+      box-shadow: var(--shadow-lg);
+      transition: all 0.3s ease;
+    }
+
+    .fab:hover {
+      transform: scale(1.1);
+      box-shadow: var(--shadow-xl);
+    }
+
+    .fab-secondary {
+      background: var(--glass);
+      color: var(--text-1);
+      border: 1px solid var(--glass-border);
+      backdrop-filter: blur(10px);
+    }
+
+    /* 动画 */
+    .fade-in { animation: fadeIn 0.6s ease; }
+    .slide-up { animation: slideUp 0.6s ease; }
+    .scale-in { animation: scaleIn 0.4s ease; }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes scaleIn {
+      from { opacity: 0; transform: scale(0.95); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    /* 列表样式 */
+    .list {
+      list-style: none;
+      padding: 0;
+    }
+
+    .list li {
+      padding: 0.75rem 0;
+      border-bottom: 1px solid var(--glass-border);
+      position: relative;
+      padding-left: 1.5rem;
+    }
+
+    .list li::before {
+      content: '•';
+      position: absolute;
+      left: 0;
+      color: var(--primary);
+      font-weight: bold;
+    }
+
+    .list li:last-child {
+      border-bottom: none;
+    }
+
+    /* 响应式 */
+    @media (max-width: 640px) {
+      .main-content { padding: 0 0.5rem; }
+      .hero { padding: 2rem 0; }
+      .section { padding: 2rem 0; }
+      .section-title { font-size: 2rem; }
+      .card { padding: 1rem; }
+      .fab-container { bottom: 1rem; right: 1rem; }
+      .timeline { padding-left: 1rem; }
+    }
+
+    /* 打印样式 */
+    @media print {
+      .navbar, .fab-container { display: none !important; }
+      .main-content { margin-top: 0; }
+      body { background: white !important; color: black !important; }
+      .card { break-inside: avoid; box-shadow: none; border: 1px solid #ccc; }
+    }
+
+    /* 可访问性 */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+
+    /* 滚动条 */
+    ::-webkit-scrollbar { width: 8px; }
+    ::-webkit-scrollbar-track { background: var(--bg-2); }
+    ::-webkit-scrollbar-thumb { background: var(--text-3); border-radius: 4px; }
+    ::-webkit-scrollbar-thumb:hover { background: var(--primary); }
+  
+    .day-photos {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 0.75rem;
+      margin: 0 0 1rem;
+    }
+    .day-photos figure {
+      margin: 0;
+      border-radius: 0.5rem;
+      overflow: hidden;
+      background: var(--bg-2);
+    }
+    .day-photos img {
+      width: 100%;
+      height: 120px;
+      object-fit: cover;
+      display: block;
+    }
+    .day-photos figcaption {
+      font-size: 0.75rem;
+      color: var(--text-3);
+      padding: 0.35rem 0.5rem;
+    }
+    .food-photo {
+      width: 100%;
+      height: 160px;
+      object-fit: cover;
+      border-radius: 0.5rem;
+      margin-bottom: 0.75rem;
+      display: block;
+    }
+    .hotel-banner {
+      display: grid;
+      grid-template-columns: 180px 1fr;
+      gap: 1rem;
+      align-items: center;
+      margin-bottom: 1.5rem;
+    }
+    @media (max-width: 640px) {
+      .hotel-banner { grid-template-columns: 1fr; }
+      .hotel-banner img { width: 100%; height: 160px; object-fit: cover; }
+    }
+
+  </style>
+</head>
+<body data-theme="dark">
+  <!-- 加载动画 -->
+  <div class="loading" id="loading">
+    <div class="spinner"></div>
+  </div>
+
+  <!-- 导航栏 -->
+  <nav class="navbar" id="navbar">
+    <div class="nav-container">
+      <a href="#" class="nav-brand">
+        <span>🍊</span>
+        长沙星城游
+      </a>
+
+      <ul class="nav-links">
+        <li><a href="#map" class="nav-link">地图</a></li>
+        <li><a href="#itinerary" class="nav-link">行程</a></li>
+        <li><a href="#weibo" class="nav-link">微博手册</a></li>
+        <li><a href="#food" class="nav-link">美食</a></li>
+        <li><a href="#attractions" class="nav-link">景点</a></li>
+        <li><a href="#tips" class="nav-link">攻略</a></li>
+        <li><a href="#spots" class="nav-link">打卡</a></li>
+        <li><a href="#gallery" class="nav-link">相册</a></li>
+      </ul>
+
+      <div class="toolbar">
+        <div class="search-container">
+          <span class="search-icon">🔍</span>
+          <input type="text" class="search-input" placeholder="搜索攻略..." id="searchInput">
+        </div>
+        <button class="theme-toggle" id="themeToggle">
+          <span id="themeIcon">🌙</span>
+        </button>
+        <button class="mobile-menu-btn" id="mobileMenuBtn">☰</button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- 主内容 -->
+  <main class="main-content">
+    <!-- 英雄区域 -->
+    <section class="hero">
+      <div class="container">
+        <div class="hero-badge fade-in">
+          <span>🚄</span>
+          杭州出发 · 长沙南 11:50 抵达 · 北辰洲际
+        </div>
+        <h1 class="hero-title slide-up">
+          2026.10.1 — 10.5 长沙五日
+        </h1>
+        <p class="hero-subtitle slide-up">
+          住长沙北辰洲际（湘江北路三段1500号）<br>
+          高铁午达 · 慢节奏可撤退 · 按她的微博喜好改过
+        </p>
+        <div class="hero-chips slide-up">
+          <span class="chip">11:50长沙南</span>
+          <span class="chip">洲际基地</span>
+          <span class="chip">打卡机位</span>
+          <span class="chip">本地馆子</span>
+        </div>
+        <div class="hero-actions scale-in">
+          <a href="#map" class="btn btn-primary"><span>📍</span> 高德地图</a>
+          <a href="#itinerary" class="btn btn-secondary"><span>🗺️</span> 行程</a>
+          <a href="#food" class="btn btn-secondary"><span>🌶️</span> 本地吃饭</a>
+          <a href="#spots" class="btn btn-secondary"><span>📷</span> 打卡机位</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- 天气与出发 -->
+    <section class="section" id="depart">
+      <div class="container">
+        <div class="section-header">
+          <h2 class="section-title">🚄 杭州出发 + 天气</h2>
+          <p class="section-subtitle">高德实时预报（撰写时）· 10月初气候参考</p>
+        </div>
+        <div class="grid grid-responsive">
+          <div class="card">
+            <div class="card-header"><h3 class="card-title">列车衔接</h3><div class="card-badge">关键：11:50 到长沙南</div></div>
+            <div class="card-content">
+              <ul class="list">
+                <li><strong>抵达</strong>：长沙南站 <strong>11:50</strong>（请以12306你的车次为准）</li>
+                <li><strong>杭州东→长沙南</strong>：常见高铁约 <strong>3.5–5 小时</strong>；若 11:50 到站，反推杭州东大约 <strong>07:00–08:30</strong> 发车一档（如 G85 类约 3h40，普通约 4h+）</li>
+                <li><strong>出发当天</strong>：杭州东预留安检+候车 <strong>40–50 分钟</strong>；国庆建议提前取纸质票或刷证进站</li>
+                <li><strong>行李</strong>：出站后<strong>优先打车</strong>去北辰洲际（国庆地铁+步行拿大件很累）</li>
+              </ul>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-header"><h3 class="card-title">南站 → 洲际</h3><div class="card-badge">高德测算</div></div>
+            <div class="card-content">
+              <ul class="list">
+                <li><strong>打车（高德实测）</strong>：长沙南→洲际 <strong>20.7 km / 约 36 分钟</strong>（畅通）；返程洲际→长沙南 <strong>22.3 km / 约 41 分钟</strong></li>
+                <li><strong>国庆预留</strong>：首日按 <strong>45–70 分钟</strong>算 → 约 <strong>12:40–13:30</strong> 到酒店</li>
+                <li><strong>地铁</strong>：约 60 分钟+步行换线（2号线转1号线），大件不推荐</li>
+                <li><strong>上车点</strong>：长沙南网约车按 APP 指引；出租车在指定通道</li>
+                <li><strong>酒店</strong>：湘江北路三段1500号，大堂需走坡道约 68 米</li>
+              </ul>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-header"><h3 class="card-title">🌤️ 天气（高德）</h3><div class="card-badge">截至撰写日</div></div>
+            <div class="card-content">
+              <p style="margin-bottom:0.75rem;"><strong>长沙实况（高德 API · 抓取于 9/24）</strong>：</p>
+              <ul class="list" style="margin-bottom:0.75rem;">
+                <li>9/24 多云 <strong>32/23°C</strong> · 9/25 晴 <strong>35/26°C</strong></li>
+                <li>9/26 晴 <strong>34/26°C</strong> · 9/27 晴 <strong>34/27°C</strong></li>
+              </ul>
+              <p style="margin-bottom:0.75rem;font-size:0.9rem;color:var(--text-3);">以上为高德实时接口返回值，<strong>不是</strong>10.1 预报；出行前请用高德/天气 App 刷新 10.1–10.5。</p>
+              <ul class="list">
+                <li><strong>10月初经验</strong>：白天可短袖+薄外套，早晚凉；国庆常有阵雨 → <strong>折叠伞+透气鞋</strong></li>
+                <li>岳麓山/橘子洲日照强：防晒、水、帽子</li>
+                <li>出发前再用高德/天气 APP 看 10.1–10.5 五日预报微调穿衣</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 今日速览 -->
+    <section class="section">
+      <div class="container">
+        <div class="card scale-in">
+          <div class="card-header">
+            <h2 class="card-title">📅 今日速览</h2>
+            <div class="card-badge" id="currentDate">加载中...</div>
+          </div>
+          <div class="card-content">
+            <p id="todayBrief">根据当前日期自动显示当日建议</p>
+            <div style="margin-top:1rem;display:flex;align-items:center;gap:1rem;flex-wrap:wrap;">
+              <label style="display:flex;align-items:center;gap:0.5rem;">
+                <input type="checkbox" id="holidayMode" checked>
+                <span>节日模式（默认开：更慢、更少挤）</span>
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 行程安排 -->
+    <section class="section" id="itinerary">
+      <div class="container">
+        <div class="section-header">
+          <h2 class="section-title">🗺️ 五日行程（按 11:50 抵达重排）</h2>
+          <p class="section-subtitle">基地：北辰洲际 · 近的先玩 · 远线单独一天</p>
+        </div>
+
+        <div class="card hotel-banner">
+          <img src="images/hotel.jpg" alt="北辰洲际" style="width:180px;height:120px;object-fit:cover;border-radius:0.5rem;">
+          <div class="card-content" style="padding:0;">
+            <h3 style="margin:0 0 0.5rem;color:var(--primary);">🏨 长沙北辰洲际酒店</h3>
+            <ul class="list">
+              <li>湘江北路三段1500号 · 评分约 4.7 · 地铁1号线北辰三角洲步行约10分钟</li>
+              <li>楼下北辰荟有<strong>茶颜</strong>；奥城有<strong>八一桥粉、酱板鸭</strong>；步行可达<strong>滨江文化园</strong></li>
+              <li>全程不换酒店，拖行李只第一天一次</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="card" style="margin-bottom:1.5rem;border:1px solid var(--primary);">
+          <div class="card-content">
+            <h3 style="margin:0 0 0.75rem;color:var(--primary);">💝 按她的喜好改过的版本</h3>
+            <p style="color:var(--text-3);margin-bottom:0.75rem;font-size:0.9rem;">
+              数据来源：微博 <strong>ups_and_downs_tz</strong>（浙江）原创帖 + 既有国庆偏好分析。不猜心思，只对齐可观察偏好。
+            </p>
+            <ul class="list">
+              <li><strong>她要的</strong>：睡够、一天至多一个硬安排、住得舒服、城内别拉练、有人把攻略扛完</li>
+              <li><strong>她怕的</strong>：十一人挤人、堵车、连轴爬山、「来都来了」景点清单、自己从一堆攻略里做选择</li>
+              <li><strong>因此本版</strong>：岳麓改成可选；文和友排队超久就换黄娭毑；坡子街不进；每天标「必做 / 可跳过」；累了直接回洲际算胜利</li>
+              <li><strong>主线锚点</strong>：湖南博物院（她吃文化讲解）+ 长沙本地吃（她吃排行榜/性价比）+ 滨江慢走（她夸过水岸公园式舒适）</li>
+              <li><strong>微博本地信号（刚爬）</strong>：3060 帖 / 906 条可操作贴 → 坡子街避雷×28、文和友排队吐槽极多、茶颜/甘长顺/玉楼东正向、橘子洲勿走穿要坐观光车、省博后可慢逛烈士公园</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="card" style="margin-bottom:1.5rem;">
+          <div class="card-content">
+            <h3 style="margin:0 0 0.75rem;color:var(--primary);">📡 微博本地信号已写进每日行程</h3>
+            <p style="margin:0;font-size:0.9rem;color:var(--text-3);">爬取 <strong>3060</strong> 帖（工作生活/打工人美食/避雷/博物馆等）→ 抽出与她「慢、少排队、文化+吃」重合的细则。完整摘录见下方 <a href="#weibo">微博手册</a>；每日卡片里的「微博札记」是可执行版。</p>
+          </div>
+        </div>
+
+        <!-- DAY 1 -->
+        <div class="timeline">
+          <div class="timeline-item"><div class="card">
+            <div class="card-header">
+              <h3 class="card-title">10/1（周四）午达长沙南 · 入住 + 滨江轻松线</h3>
+              <div class="card-badge">抵达日 | 不赶远</div>
+            </div>
+            <div class="card-content">
+              <div class="day-photos">
+                <figure><img src="images/hotel.jpg" alt="酒店"><figcaption>入住洲际</figcaption></figure>
+                <figure><img src="images/bayi-fen.jpg" alt="八一桥粉"><figcaption>八一桥粉馆午餐</figcaption></figure>
+                <figure><img src="images/binjiang.jpg" alt="滨江文化园"><figcaption>滨江文化园</figcaption></figure>
+                <figure><img src="images/binjiang-tower.jpg" alt="景观塔"><figcaption>景观塔机位</figcaption></figure>
+                <figure><img src="images/bayi-fen.jpg" alt="八一桥粉"><figcaption>八一桥粉馆</figcaption></figure>
+                  <figure><img src="images/jiangbanya.jpg" alt="酱板鸭"><figcaption>酱板鸭特产</figcaption></figure>
+                <figure><img src="images/chayan.jpg" alt="茶颜"><figcaption>茶颜北辰荟</figcaption></figure>
+              </div>
+              <p style="color:var(--text-3);margin-bottom:1rem;">11:50 到站 → 打车入住 → 下午只走<strong>酒店周边</strong>，养足力气给后面经典线。</p>
+
+              <div style="background:var(--bg-2);padding:1rem;border-radius:0.5rem;margin-bottom:1rem;">
+                <h4 style="margin:0 0 0.5rem;color:var(--primary);">⏰ 详细时间表</h4>
+                <ul style="list-style:none;padding:0;margin:0;">
+                  <li><strong>11:50</strong> 长沙南出站（出站口跟人流走，别在站内磨）</li>
+                  <li><strong>12:05–12:20</strong> 打到网约车/出租（国庆排队可能多，耐心）</li>
+                  <li><strong>≈12:50–13:30</strong> 到北辰洲际办理入住、放行李、洗把脸</li>
+                  <li><strong>13:30–15:00</strong> 🍜 <strong>八一桥原味粉馆</strong>（奥城，人均约¥16）或酒店<strong>湘秀/栀味轩</strong>；顺路买<strong>酱板鸭</strong></li>
+                  <li><strong>15:30–18:00</strong> 🚶 步行<strong>滨江文化园 / 北辰滨江公园</strong>：三馆一厅外观、景观塔、江景</li>
+                  <li><strong>高匹配备选</strong>：同片区<strong>长沙博物馆 / 市图书馆</strong>（她会喜欢的室内文化点，比再去网红街强）</li>
+                  <li><strong>18:30–20:00</strong> 晚上可茶颜（北辰荟）+ 酱板鸭；想正餐再去奥城找本地馆</li>
+                  <li><strong>今晚必做</strong>：微信预约 <strong>10/2 湖南博物院</strong>时段（提前约5天放票规则，尽早锁）</li>
+                </ul>
+              </div>
+
+              <div style="background:var(--bg-2);padding:1rem;border-radius:0.5rem;margin-bottom:1rem;">
+                <h4 style="margin:0 0 0.5rem;color:var(--success);">📷 今日打卡机位</h4>
+                <ul class="list">
+                  <li><strong>洲际大堂坡道</strong>：酒店门脸全景，行李箱入镜（到店即拍）</li>
+                  <li><strong>滨江文化园景观塔</strong>：仰拍建筑线条；黄昏逆光好看</li>
+                  <li><strong>湘江江景步道</strong>：河东江面+晚霞，少游客滤镜感</li>
+                  <li><strong>北辰荟罗马广场</strong>：商场中庭对称构图</li>
+                </ul>
+              </div>
+
+              <div style="background:var(--bg-2);padding:1rem;border-radius:0.5rem;margin-bottom:1rem;border-left:3px solid var(--primary);">
+                <h4 style="margin:0 0 0.5rem;color:var(--primary);">📓 微博札记 · Day1</h4>
+                <ul class="list">
+                  <li>打工人周末帖常见节奏：<strong>睡到自然醒 → 嗦粉 → 茶颜 → 江边</strong>，首日就按这个养状态</li>
+                  <li>北辰/滨江「三馆一厅」被写成楚韵+江景同框；累了进<strong>长沙博物馆/市图</strong>吹空调，比冲五一强</li>
+                  <li>多帖提醒：景点/省博要<strong>提前预约</strong>——今晚一定把 10/2 票锁死</li>
+                </ul>
+              </div>
+              <div style="background:var(--bg-2);padding:1rem;border-radius:0.5rem;">
+                <h4 style="margin:0 0 0.5rem;color:var(--warning);">本地人提醒</h4>
+                <ul class="list">
+                  <li>首日<strong>别冲五一/文和友</strong>——人从南站刚进城最疯，而且来回浪费</li>
+                  <li>点菜说「<strong>微辣/免辣</strong>」：长沙默认辣度对杭州胃往往偏重</li>
+                </ul>
+              </div>
+            </div>
+          </div></div>
+
+          <!-- DAY 2 -->
+          <div class="timeline-item"><div class="card">
+            <div class="card-header">
+              <h3 class="card-title">10/2（周五）湖南博物院（主线）+ 烈士公园慢走 · IFS 可砍</h3>
+              <div class="card-badge">距酒店最近大景点</div>
+            </div>
+            <div class="card-content">
+              <div class="day-photos">
+                <figure><img src="images/museum.jpg" alt="省博"><figcaption>湖南博物院</figcaption></figure>
+                <figure><img src="images/binjiang.jpg" alt="公园"><figcaption>省博后慢走</figcaption></figure>
+                <figure><img src="images/ganchangshun.jpg" alt="甘长顺"><figcaption>甘长顺米粉</figcaption></figure>
+                <figure><img src="images/chayan.jpg" alt="茶颜"><figcaption>茶颜（可北辰荟）</figcaption></figure>
+              </div>
+              <div style="background:var(--bg-2);padding:1rem;border-radius:0.5rem;margin-bottom:1rem;">
+                <h4 style="margin:0 0 0.5rem;color:var(--primary);">⏰ 详细时间表（微博本地向改）</h4>
+                <ul style="list-style:none;padding:0;margin:0;">
+                  <li><strong>睡够再出</strong>：按预约时段到省博即可，不必为 IFS 早起</li>
+                  <li><strong>必做</strong>：🏛️ <strong>湖南博物院</strong>（东风路50号）马王堆；能约讲解更好</li>
+                  <li><strong>午餐</strong>：甘长顺 / 杨裕兴 / 笨罗卜育英街</li>
+                  <li><strong>下午首选</strong>：🚶 <strong>烈士公园</strong>（省博旁）情侣慢走——比硬冲商圈更贴她</li>
+                  <li><strong>可跳过</strong>：IFS；茶颜可回<strong>北辰荟</strong>解决</li>
+                  <li><strong>晚饭</strong>：玉楼东北正街 或 回北辰八一桥粉（不进坡子街）</li>
+                </ul>
+              </div>
+              <div style="background:var(--bg-2);padding:1rem;border-radius:0.5rem;margin-bottom:1rem;">
+                <h4 style="margin:0 0 0.5rem;color:var(--success);">📷 打卡机位</h4>
+                <ul class="list">
+                  <li><strong>省博外观大台阶</strong>：正面全景，人少时最佳</li>
+                  <li><strong>马王堆展厅</strong>：禁止闪光；拍展板/空间即可</li>
+                  <li><strong>烈士公园湖边/路径</strong>：人少树荫，适合并肩走</li>
+                </ul>
+              </div>
+              <div style="background:var(--bg-2);padding:1rem;border-radius:0.5rem;margin-bottom:1rem;border-left:3px solid var(--primary);">
+                <h4 style="margin:0 0 0.5rem;color:var(--primary);">📓 微博札记 · Day2</h4>
+                <ul class="list">
+                  <li>高频结构：<strong>湖南省博物馆（免费需预约）→ 烈士公园</strong>「出来就是，适合情侣逛」——比 IFS 打卡更贴她</li>
+                  <li>马王堆是她会吃的「讲解/典故」型内容；馆内不求刷完，看镇馆即可</li>
+                  <li>粉面：微博本地贴强调<strong>别在太平街/坡子街/五一主街吃粉</strong>（溢价预制）；甘长顺/杨裕兴或小区老店</li>
+                  <li>辣度：有帖写「长沙没有微辣」「微微微辣仍辣哭」——开口必须<strong>冒辣</strong></li>
+                </ul>
+              </div>
+              <div style="background:var(--bg-2);padding:1rem;border-radius:0.5rem;">
+                <h4 style="margin:0 0 0.5rem;color:var(--warning);">预约</h4>
+                <ul class="list">
+                  <li>微信/支付宝「湖南省博物馆」，约提前5天、每晚约20:00放票；带证件原件</li>
+                  <li>国庆开放含 10.1–10.7；最晚入馆时间以当日公告为准</li>
+                </ul>
+              </div>
+            </div>
+          </div></div>
+
+          <!-- DAY 3 -->
+          <div class="timeline-item"><div class="card">
+            <div class="card-header">
+              <h3 class="card-title">10/3（周六）橘子洲为主 · 岳麓书院可选（体力友好）</h3>
+              <div class="card-badge">必做：橘子洲 | 可跳过：爬山</div>
+            </div>
+            <div class="card-content">
+              <div class="day-photos">
+                <figure><img src="images/juzizhou.jpg" alt="橘子洲"><figcaption>青年毛泽东雕塑</figcaption></figure>
+                <figure><img src="images/yuelu.jpg" alt="岳麓书院"><figcaption>岳麓书院</figcaption></figure>
+                <figure><img src="images/xiangqun.jpg" alt="向群锅饺"><figcaption>向群锅饺早餐</figcaption></figure>
+              </div>
+              <div style="background:var(--bg-2);padding:1rem;border-radius:0.5rem;margin-bottom:1rem;">
+                <h4 style="margin:0 0 0.5rem;color:var(--primary);">⏰ 体力友好版时间表</h4>
+                <ul style="list-style:none;padding:0;margin:0;">
+                  <li><strong>可睡到自然醒</strong>：不必 7 点硬爬；若想避开人流再早，否则 9 点出也行</li>
+                  <li><strong>必做</strong>：地铁到橘子洲·青莲 → <strong>优先坐观光车/小火车</strong>到雕塑（微博踩雷帖：全岛走路会累垮）→ 江边站一会就撤，2h 封顶</li>
+                  <li><strong>午餐</strong>：回城甘长顺/杨裕兴，或河西简单吃</li>
+                  <li><strong>可跳过</strong>：岳麓山爬山（她明确「逛景点像煎熬」时优先砍）；若还想文化感，只进<strong>岳麓书院</strong>平路部分，不登山、不排索道</li>
+                  <li><strong>下午空白</strong>：回洲际泡澡/睡觉/滨江再走一圈，都算完美一天</li>
+                  <li><strong>晚饭</strong>：八一桥粉 / 酒店餐厅 / 酱板鸭+茶颜</li>
+                </ul>
+              </div>
+              <div style="background:var(--bg-2);padding:1rem;border-radius:0.5rem;margin-bottom:1rem;">
+                <h4 style="margin:0 0 0.5rem;color:var(--warning);">撤退口令</h4>
+                <p style="margin:0;font-size:0.9rem;">人太多 / 晒不动 / 腿酸 → 立刻打车回北辰，不解释「来都来了」。</p>
+              </div>
+              <div style="background:var(--bg-2);padding:1rem;border-radius:0.5rem;margin-bottom:1rem;border-left:3px solid var(--primary);">
+                <h4 style="margin:0 0 0.5rem;color:var(--primary);">📓 微博札记 · Day3</h4>
+                <ul class="list">
+                  <li>踩雷共识原话级：<strong>「橘子洲必须坐小火车！走路会累到怀疑人生」</strong>；公众号/现场接驳，别硬走</li>
+                  <li>车开不进景区，外面接驳车多——下车直接找观光车/小火车</li>
+                  <li>雨天可能临时关园（有帖提过）；出发前瞄一眼天气，关了就改滨江/回酒店</li>
+                  <li>岳麓山：国庆人山人海帖极多；她体力偏好下<strong>默认砍登山</strong>，书院平路都可选</li>
+                  <li>步行街「水果捞」刺客、乱点湘菜腹泻——本日不安排游客小吃街</li>
+                </ul>
+              </div>
+              <div style="background:var(--bg-2);padding:1rem;border-radius:0.5rem;">
+                <h4 style="margin:0 0 0.5rem;color:var(--success);">📷 打卡机位（重点）</h4>
+                <ul class="list">
+                  <li><strong>雕塑正面偏右 45°</strong>：脸部轮廓清晰，上午 9–11 点光线最好</li>
+                  <li><strong>雕塑侧面+江面</strong>：人少，适合竖构图</li>
+                  <li><strong>橘洲大桥远景</strong>：把雕塑和桥同框（需走远一点）</li>
+                  <li><strong>岳麓书院「惟楚有材」门联</strong>：正面站位，避开头顶过曝</li>
+                  <li><strong>爱晚亭</strong>：亭+枫（若未红叶也有古建感）；人多就拍亭檐细节</li>
+                </ul>
+              </div>
+            </div>
+          </div></div>
+
+          <!-- DAY 4 -->
+          <div class="timeline-item"><div class="card">
+            <div class="card-header">
+              <h3 class="card-title">10/4（周日）本地馆吃饭日 · 不进坡子街</h3>
+              <div class="card-badge">避雷坡子街</div>
+            </div>
+            <div class="card-content">
+              <div class="day-photos">
+                <figure><img src="images/huangayi.jpg" alt="黄娭毑"><figcaption>黄娭毑口味虾</figcaption></figure>
+                <figure><img src="images/wenheyou.jpg" alt="文和友"><figcaption>文和友看队再进</figcaption></figure>
+                <figure><img src="images/yuloudong.jpg" alt="玉楼东"><figcaption>玉楼东正餐</figcaption></figure>
+                <figure><img src="images/ganchangshun.jpg" alt="粉"><figcaption>甘长顺粉面</figcaption></figure>
+              </div>
+              <div style="background:var(--bg-2);padding:1rem;border-radius:0.5rem;margin-bottom:1rem;border-left:3px solid var(--warning);">
+                <p style="margin:0 0 0.5rem;font-size:0.9rem;"><strong>红线：</strong>坡子街整条不进（火宫殿总店、鱼嘴巴、黑色经典游客街店一并跳过）。</p>
+                <p style="margin:0;font-size:0.85rem;color:var(--text-3);">微博量化：坡子街避雷相关约 28 次；另有本地帖写「正统米粉 8–10 元在居民区，坡子/太平/五一主街 15–25 元还是预制粉」。</p>
+              </div>
+              <div style="background:var(--bg-2);padding:1rem;border-radius:0.5rem;margin-bottom:1rem;">
+                <h4 style="margin:0 0 0.5rem;color:var(--primary);">⏰ 详细时间表</h4>
+                <ul style="list-style:none;padding:0;margin:0;">
+                  <li><strong>睡够再出门</strong>：中午前后出发即可</li>
+                  <li><strong>主线 A</strong>：🦞 <strong>黄娭毑口味小龙虾</strong>（高正街54号，约12:00–04:00，人均约¥81）— 本地虾馆，不靠游客街</li>
+                  <li><strong>主线 B</strong>：若想尝文和友，先看队 ≤40 分钟再进；超了<strong>直接去黄娭毑</strong>，别折回坡子街</li>
+                  <li><strong>正餐湘菜</strong>：<strong>玉楼东·北正街</strong> 或 <strong>笨罗卜·育英街14号</strong>（本地人平价浏阳菜；<strong>不去太平街店</strong>）</li>
+                  <li><strong>粉面补一刀</strong>：甘长顺总店 / 杨裕兴中山路</li>
+                  <li><strong>本地人原话</strong>：文和友长队时「拐进巷子吃老店」——本次直接黄娭毑，不赌队</li>
+                  <li><strong>下午空白</strong>：回洲际 / 滨江慢走；不逛太平老街游客线</li>
+                  <li><strong>20:30+</strong> 回北辰；饿了酒店大堂吧或北辰荟茶颜</li>
+                </ul>
+              </div>
+              <div style="background:var(--bg-2);padding:1rem;border-radius:0.5rem;margin-bottom:1rem;border-left:3px solid var(--primary);">
+                <h4 style="margin:0 0 0.5rem;color:var(--primary);">📓 微博札记 · Day4（吃）</h4>
+                <ul class="list">
+                  <li>本地人原话：<strong>「下班经过文和友，排队的人还是那么多。我这种本地人基本不去凑热闹，想吃口味虾就拐到旁边巷子老店」</strong> → 本次默认黄娭毑</li>
+                  <li>文和友实测吐槽常见「排两小时就为了虾」——≤40 分钟才进，否则立刻换店</li>
+                  <li>口味虾吃法：虾 + <strong>清汤面/拌面吸汤汁</strong>（多帖当「餐尾必配」）；先说冒辣</li>
+                  <li>笨罗卜：本地评「综合实力强 / 人均四十 / 醋蒸鸡+酸菜炒粉皮」；去<strong>育英街</strong>，不去太平街分店</li>
+                  <li>玉楼东：老字号正餐向，适合「想坐下来好好吃一顿」而不是小吃街游击</li>
+                  <li>国庆本地年轻人帖：<strong>躺平式本地游</strong>——不踩饭店雷、不去景点人挤人，靠必吃榜/巷子店</li>
+                </ul>
+              </div>
+              <div style="background:var(--bg-2);padding:1rem;border-radius:0.5rem;">
+                <h4 style="margin:0 0 0.5rem;color:var(--success);">📷 打卡机位</h4>
+                <ul class="list">
+                  <li><strong>文和友永远街/老阳台</strong>（若进去了）：复古霓虹；人多就少拍</li>
+                  <li><strong>黄娭毑桌面</strong>：虾+手套出片，比游客街烟火更真实</li>
+                  <li><strong>不拍</strong>：坡子街牌楼/小吃街纵深</li>
+                </ul>
+              </div>
+            </div>
+          </div></div>
+
+          <!-- DAY 5 -->
+          <div class="timeline-item"><div class="card">
+            <div class="card-header">
+              <h3 class="card-title">10/5（周一）轻收尾 · 默认跳过天心阁 · 返杭</h3>
+              <div class="card-badge">收尾 | 视返程车次</div>
+            </div>
+            <div class="card-content">
+              <div class="day-photos">
+                <figure><img src="images/jiangbanya.jpg" alt="酱板鸭"><figcaption>酱板鸭特产</figcaption></figure>
+                <figure><img src="images/chayan.jpg" alt="茶颜"><figcaption>茶颜收尾</figcaption></figure>
+                <figure><img src="images/hotel.jpg" alt="退房"><figcaption>退房返程</figcaption></figure>
+              </div>
+              <div style="background:var(--bg-2);padding:1rem;border-radius:0.5rem;margin-bottom:1rem;">
+                <h4 style="margin:0 0 0.5rem;color:var(--primary);">⏰ 详细时间表（示例：下午车）</h4>
+                <ul style="list-style:none;padding:0;margin:0;">
+                  <li><strong>09:00前</strong> 退房寄存行李</li>
+                  <li><strong>默认</strong>：酒店早餐 → 特产 → 南站（天心阁低匹配，不值得硬排）。若体力意外很好：可改<strong>谢子龙/李自健</strong>看展，比登楼更贴她</li>
+                  <li><strong>11:30–13:00</strong> 买特产（酱板鸭真空装；臭豆腐若想带就南站超市真空款，不专程去坡子街）+ 简餐</li>
+                  <li><strong>返程</strong>：回洲际取行李 → <strong>打车去长沙南</strong>（国庆预留 60–90 分钟到站安检）→ 高铁回杭州东</li>
+                </ul>
+              </div>
+              <div style="background:var(--bg-2);padding:1rem;border-radius:0.5rem;margin-bottom:1rem;border-left:3px solid var(--primary);">
+                <h4 style="margin:0 0 0.5rem;color:var(--primary);">📓 微博札记 · Day5</h4>
+                <ul class="list">
+                  <li>特产：别人带酱板鸭卤味；有人只带茶颜周边——按她喜好优先<strong>酱板鸭真空 + 茶颜最后一杯</strong></li>
+                  <li>臭豆腐：想带就南站真空装；专程回游客街不值得</li>
+                  <li>体力意外很好时：谢子龙/李自健看展（类型合她），比天心阁登楼值</li>
+                </ul>
+              </div>
+              <div style="background:var(--bg-2);padding:1rem;border-radius:0.5rem;">
+                <h4 style="margin:0 0 0.5rem;color:var(--accent);">📷 打卡</h4>
+                <ul class="list">
+                  <li><strong>洲际大堂 / 北辰荟</strong>：轻松收尾合影即可</li>
+                  <li><strong>若改谢子龙</strong>：建筑外观+湖面倒影（馆方机位多）</li>
+                </ul>
+              </div>
+            </div>
+          </div></div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- 微博本地手册 -->
+    <section class="section" id="weibo">
+      <div class="container">
+        <div class="section-header">
+          <h2 class="section-title">📡 微博本地手册（详尽版）</h2>
+          <p class="section-subtitle">3060 帖检索 · 只保留能指导「她会不会开心」的细则 · 广告/行程清单帖已降权</p>
+        </div>
+
+        <div class="grid grid-responsive" style="margin-bottom:1.5rem;">
+          <div class="card">
+            <div class="card-header"><h3 class="card-title">样本与筛选</h3><div class="card-badge">方法</div></div>
+            <div class="card-content">
+              <ul class="list">
+                <li>关键词：长沙工作生活、打工人美食、本地人推荐/吃、避雷、口味虾、省博、滨江、橘子洲避雷、文和友排队、国庆等</li>
+                <li>可操作贴约 <strong>906</strong>；本手册只摘「能改行程」的共识</li>
+                <li>过滤：高德扫街榜软广、蜡像馆硬广、整容/无关岳麓区帖</li>
+                <li>优先级：本地人口吻 &gt; 游客踩雷实录 &gt; 网红打卡清单</li>
+              </ul>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-header"><h3 class="card-title">和她喜好的交集</h3><div class="card-badge">决策</div></div>
+            <div class="card-content">
+              <ul class="list">
+                <li>她要慢 + 本地有「躺平式本地游」→ 每天一事、可撤退</li>
+                <li>她要博物馆讲解 + 本地推省博/烈士公园情侣线 → Day2 主线</li>
+                <li>她要排行榜好吃少空耗 + 本地骂文和友长队/坡子街溢价 → Day4 换馆</li>
+                <li>她怕逛景点煎熬 + 本地骂橘子洲徒步/岳麓人海 → 坐车控量、砍山</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="card" style="margin-bottom:1.5rem;">
+          <div class="card-content">
+            <h3 style="margin:0 0 1rem;">✅ 照做 / ❌ 别做（微博共识表）</h3>
+            <div style="overflow-x:auto;">
+              <table style="width:100%;border-collapse:collapse;font-size:0.88rem;">
+                <thead>
+                  <tr style="background:var(--bg-2);text-align:left;">
+                    <th style="padding:0.65rem;">主题</th>
+                    <th style="padding:0.65rem;">照做</th>
+                    <th style="padding:0.65rem;">别做</th>
+                    <th style="padding:0.65rem;">依据强度</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr style="border-top:1px solid var(--border);">
+                    <td style="padding:0.65rem;"><strong>粉面</strong></td>
+                    <td style="padding:0.65rem;">甘长顺 / 杨裕兴 / 居民区老店（约 ¥8–10）</td>
+                    <td style="padding:0.65rem;">坡子街、太平街、五一主街米粉</td>
+                    <td style="padding:0.65rem;">强（价格+预制粉避雷帖）</td>
+                  </tr>
+                  <tr style="border-top:1px solid var(--border);background:var(--bg-2);">
+                    <td style="padding:0.65rem;"><strong>口味虾</strong></td>
+                    <td style="padding:0.65rem;">黄娭毑等巷子/本地馆；虾后清汤面</td>
+                    <td style="padding:0.65rem;">文和友空耗 &gt;40min；坡子街虾摊</td>
+                    <td style="padding:0.65rem;">强（本地人「不去凑热闹」）</td>
+                  </tr>
+                  <tr style="border-top:1px solid var(--border);">
+                    <td style="padding:0.65rem;"><strong>正餐</strong></td>
+                    <td style="padding:0.65rem;">玉楼东；笨罗卜育英街（醋蒸鸡、酸菜炒粉皮）</td>
+                    <td style="padding:0.65rem;">笨罗卜太平街店；游客区随机湘菜</td>
+                    <td style="padding:0.65rem;">中强</td>
+                  </tr>
+                  <tr style="border-top:1px solid var(--border);background:var(--bg-2);">
+                    <td style="padding:0.65rem;"><strong>省博</strong></td>
+                    <td style="padding:0.65rem;">提前预约；看马王堆；出来烈士公园慢走</td>
+                    <td style="padding:0.65rem;">没预约硬等；出馆再冲五个景点</td>
+                    <td style="padding:0.65rem;">强</td>
+                  </tr>
+                  <tr style="border-top:1px solid var(--border);">
+                    <td style="padding:0.65rem;"><strong>橘子洲</strong></td>
+                    <td style="padding:0.65rem;">接驳+小火车/观光车→雕塑→撤</td>
+                    <td style="padding:0.65rem;">全岛徒步；雨天硬去</td>
+                    <td style="padding:0.65rem;">强（踩雷置顶级）</td>
+                  </tr>
+                  <tr style="border-top:1px solid var(--border);background:var(--bg-2);">
+                    <td style="padding:0.65rem;"><strong>岳麓</strong></td>
+                    <td style="padding:0.65rem;">最多书院平路</td>
+                    <td style="padding:0.65rem;">登山+索道+爱晚亭连轴</td>
+                    <td style="padding:0.65rem;">强（人海+她体力）</td>
+                  </tr>
+                  <tr style="border-top:1px solid var(--border);">
+                    <td style="padding:0.65rem;"><strong>辣度</strong></td>
+                    <td style="padding:0.65rem;">开口「冒辣」；冰粉/酸梅汤备着</td>
+                    <td style="padding:0.65rem;">信「微辣」；乱点不知名湘菜馆</td>
+                    <td style="padding:0.65rem;">强</td>
+                  </tr>
+                  <tr style="border-top:1px solid var(--border);background:var(--bg-2);">
+                    <td style="padding:0.65rem;"><strong>街头小吃</strong></td>
+                    <td style="padding:0.65rem;">茶颜（可北辰荟）；酱板鸭真空</td>
+                    <td style="padding:0.65rem;">步行街水果捞称重；坡子街油炸社类</td>
+                    <td style="padding:0.65rem;">中强</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <div class="grid grid-responsive">
+          <div class="card">
+            <div class="card-header"><h3 class="card-title">🗣️ 可引用的本地原话</h3><div class="card-badge">摘录</div></div>
+            <div class="card-content">
+              <ul class="list">
+                <li>「橘子洲必须坐小火车！走路会累到怀疑人生」</li>
+                <li>「文和友排队…本地人基本不去凑热闹，想吃口味虾就拐到旁边巷子」</li>
+                <li>「不要在太平街、坡子街、五一广场主街吃粉…景区店溢价预制」</li>
+                <li>「省博物馆出来就是烈士公园…很适合情侣逛」</li>
+                <li>「长沙没有微辣」→ 对我们：开口冒辣</li>
+                <li>「年轻人…既不想去饭店踩雷，也不想去景点人挤人，只想躺平式旅游」</li>
+              </ul>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-header"><h3 class="card-title">🦞 吃：微博点单细化</h3><div class="card-badge">Day4</div></div>
+            <div class="card-content">
+              <ul class="list">
+                <li><strong>黄娭毑</strong>：口味虾一份两人分；必说冒辣；配冰粉/酸梅汤；可加清汤面</li>
+                <li><strong>笨罗卜育英街</strong>：醋蒸鸡、酸菜炒粉皮；人均约四十；早去少排</li>
+                <li><strong>玉楼东</strong>：正经坐店湘菜，少网红滤镜</li>
+                <li><strong>甘长顺/杨裕兴</strong>：牛肉粉/肉丝粉；当早餐或垫胃，别当唯一正餐硬撑</li>
+                <li><strong>茶颜</strong>：幽兰拿铁；怕甜减糖；北辰荟就能买，不必为奶茶杀去五一</li>
+                <li><strong>文和友</strong>：仅短队；进去也别恋战，虾+走</li>
+              </ul>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-header"><h3 class="card-title">🏛️ 玩：微博场景细化</h3><div class="card-badge">Day2–3</div></div>
+            <div class="card-content">
+              <ul class="list">
+                <li><strong>省博</strong>：免费预约；证件；马王堆为主；讲解优先于自拍</li>
+                <li><strong>烈士公园</strong>：出馆顺路，树荫湖景，情侣慢走 45–90 分钟够</li>
+                <li><strong>橘子洲</strong>：地铁青莲 → 接驳/小火车 → 雕塑 2h 封顶 → 回城</li>
+                <li><strong>书院</strong>：可选平路门联；不排索道、不登顶</li>
+                <li><strong>滨江三馆</strong>：酒店旁回血点；下雨进博物馆/图书馆</li>
+              </ul>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-header"><h3 class="card-title">⚠️ 国庆特供避雷</h3><div class="card-badge">十一</div></div>
+            <div class="card-content">
+              <ul class="list">
+                <li>人从南站灌进城：抵达日不进五一商圈</li>
+                <li>热门店取号可能爆炸：备黄娭毑/笨罗卜双保险</li>
+                <li>天气：近期有帖提雨天关橘子洲——出门前看一眼</li>
+                <li>「必去清单」帖（坡子+岳麓山连轴）直接忽略，和她偏好冲突</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+        <!-- 湘菜美食 -->
+    <section class="section" id="food">
+      <div class="container">
+        <div class="section-header">
+          <h2 class="section-title">🌶️ 长沙才吃得到的本地馆</h2>
+          <p class="section-subtitle">已砍掉费大厨等全国连锁 · 高德核实地址/评分 · 优先「长沙才有感觉」的店</p>
+        </div>
+
+        <div class="card" style="margin-bottom:1.5rem;background:linear-gradient(135deg,var(--primary),var(--secondary));color:#fff;">
+          <div class="card-content">
+            <h3 style="margin:0 0 0.75rem;">筛选原则（她的喜好 × 微博本地）</h3>
+            <ul class="list">
+              <li><strong>要</strong>：本地人会去的馆（口味虾巷子店、粉面老字号、玉楼东/笨罗卜、茶颜、酱板鸭）</li>
+              <li><strong>不要</strong>：坡子/太平/五一主街游客店；费大厨等全国连锁；为网红空耗体力</li>
+              <li>开口先说 <strong>「冒辣」</strong>（微博：微辣仍可能辣哭）；虾后可配清汤面</li>
+              <li>正向提及排序（检索样本内）：茶颜、甘长顺、玉楼东、黄娭毑…；负向头名：文和友排队、坡子街</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="grid grid-responsive">
+          <div class="card">
+            <div class="card-header"><h3 class="card-title">🏨 北辰洲际附近（走路/打车5–10分钟）</h3><div class="card-badge">抵达日首选</div></div>
+            <div class="card-content">
+              <img class="food-photo" src="images/bayi-fen.jpg" alt="八一桥粉">
+              <div style="background:var(--bg-2);padding:1rem;border-radius:0.5rem;margin-bottom:1rem;">
+                <h4 style="margin:0 0 0.5rem;color:var(--primary);">八一桥原味粉馆（北辰店）⭐4.6</h4>
+                <p>📍 北辰三角洲奥城 D2 区车库层 G072<br>
+                ⏰ 约 06:00–22:00 | 💰 人均约 ¥16<br>
+                <strong>为什么算长沙</strong>：本地米粉馆，不是全国粉连锁。<br>
+                <strong>点</strong>：原味牛肉粉 / 肉丝粉；汤清、粉滑，适合刚下车垫肚子。</p>
+              </div>
+              <img class="food-photo" src="images/jiangbanya.jpg" alt="酱板鸭">
+              <div style="background:var(--bg-2);padding:1rem;border-radius:0.5rem;margin-bottom:1rem;">
+                <h4 style="margin:0 0 0.5rem;color:var(--primary);">鸭想卤·酱板鸭（北辰旗舰）⭐4.5</h4>
+                <p>📍 奥城 E4 区 4 栋 | ⏰ 24h | 💰 人均约 ¥33<br>
+                <strong>长沙特产</strong>：酱板鸭真空可带走；当零食/配啤酒都合适。<br>
+                南站也有黑色经典，但想「本地卤味」优先酱板鸭。</p>
+              </div>
+              <div style="background:var(--bg-2);padding:1rem;border-radius:0.5rem;">
+                <h4 style="margin:0 0 0.5rem;color:var(--primary);">茶颜悦色（北辰荟）</h4>
+                <img class="food-photo" src="images/chayan.jpg" alt="茶颜" style="height:120px;">
+                <p><strong>长沙土著奶茶</strong>（外地有店也不如长沙密）。新手：幽兰拿铁；怕甜减糖。<br>
+                酒店累了也可下楼北辰荟解决，不必专程五一。</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-header"><h3 class="card-title">🚫 坡子街 · 整条避雷</h3><div class="card-badge">不进</div></div>
+            <div class="card-content">
+              <div style="background:var(--bg-2);padding:1rem;border-radius:0.5rem;margin-bottom:1rem;border-left:3px solid var(--warning);">
+                <h4 style="margin:0 0 0.5rem;color:var(--warning);">为什么砍掉</h4>
+                <p style="margin:0;">有人明确避雷：游客密度高、踩雷店多、性价比不稳定。火宫殿总店 / 鱼嘴巴 / 黑色经典等<strong>都在这条线上，一并跳过</strong>。</p>
+              </div>
+              <div style="background:var(--bg-2);padding:1rem;border-radius:0.5rem;">
+                <h4 style="margin:0 0 0.5rem;color:var(--success);">改去这些</h4>
+                <ul class="list">
+                  <li><strong>黄娭毑</strong>高正街 — 口味虾</li>
+                  <li><strong>玉楼东</strong>北正街 — 正餐湘菜</li>
+                  <li><strong>甘长顺 / 杨裕兴</strong> — 粉面</li>
+                  <li><strong>文和友</strong> — 仅短队时</li>
+                  <li>想带臭豆腐：南站超市真空装，别专程去游客街</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-header"><h3 class="card-title">🦞 口味虾 · 本地馆（非全国连锁）</h3><div class="card-badge">夜宵</div></div>
+            <div class="card-content">
+              <img class="food-photo" src="images/wenheyou.jpg" alt="文和友">
+              <div style="background:var(--bg-2);padding:1rem;border-radius:0.5rem;margin-bottom:1rem;">
+                <h4 style="margin:0 0 0.5rem;color:var(--primary);">超级文和友（海信广场）⭐4.8</h4>
+                <p>📍 湘江中路36号 | ⏰ 约 11:00–次日02:00 | 💰 人均约 ¥88+<br>
+                <strong>长沙地标</strong>：口味虾 + 老长沙街区；排队超 1.5h 就改下一家本地虾馆。</p>
+              </div>
+              <img class="food-photo" src="images/huangayi.jpg" alt="黄娭毑">
+              <div style="background:var(--bg-2);padding:1rem;border-radius:0.5rem;margin-bottom:1rem;">
+                <h4 style="margin:0 0 0.5rem;color:var(--primary);">黄娭毑口味小龙虾 ⭐4.6</h4>
+                <p>📍 高正街54号 | ⏰ 约 12:00–04:00 | 💰 人均约 ¥81<br>
+                本地人口味虾馆；比全国连锁「小龙虾店」更有长沙味。</p>
+              </div>
+              <div style="background:var(--bg-2);padding:1rem;border-radius:0.5rem;">
+                <h4 style="margin:0 0 0.5rem;color:var(--warning);">不推荐：太平街/坡子街虾馆</h4>
+                <p>📍 与坡子街游客动线重叠，本次一律跳过；虾馆只保留<strong>黄娭毑（高正街）</strong>。</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-header"><h3 class="card-title">🥣 粉面锅饺 · 长沙早餐文化</h3><div class="card-badge">老字号</div></div>
+            <div class="card-content">
+              <img class="food-photo" src="images/ganchangshun.jpg" alt="甘长顺">
+              <div style="background:var(--bg-2);padding:1rem;border-radius:0.5rem;margin-bottom:1rem;">
+                <h4 style="margin:0 0 0.5rem;color:var(--primary);">甘长顺（总店）⭐4.4</h4>
+                <p>📍 解放西路136号 | ⏰ 约 06:00–02:00 | 💰 人均约 ¥20<br>
+                长沙人自己吃的粉面；牛肉粉/肉丝粉。</p>
+              </div>
+              <img class="food-photo" src="images/yangyuxing.jpg" alt="杨裕兴">
+              <div style="background:var(--bg-2);padding:1rem;border-radius:0.5rem;margin-bottom:1rem;">
+                <h4 style="margin:0 0 0.5rem;color:var(--primary);">杨裕兴（中山路店）⭐4.4</h4>
+                <p>📍 中山路347号 | ⏰ 约 06:00–02:00 | 💰 人均约 ¥24<br>
+                百年长沙粉面老字号；与甘长顺可二选一，别浪费胃容量。</p>
+              </div>
+              <img class="food-photo" src="images/xiangqun.jpg" alt="向群">
+              <div style="background:var(--bg-2);padding:1rem;border-radius:0.5rem;margin-bottom:1rem;">
+                <h4 style="margin:0 0 0.5rem;color:var(--primary);">向群锅饺</h4>
+                <p>📍 南门口店 / 登高路店（近岳麓）<br>
+                长沙早餐代表：锅饺+扁豆面/拌粉；岳麓那天可顺路。</p>
+              </div>
+              <img class="food-photo" src="images/deyuan.jpg" alt="德园">
+              <div style="background:var(--bg-2);padding:1rem;border-radius:0.5rem;">
+                <h4 style="margin:0 0 0.5rem;color:var(--primary);">百年德园 ⭐4.6</h4>
+                <p>📍 芙蓉中路三段98号（候家塘）| ⏰ 约 06:00–22:00 | 💰 人均约 ¥10<br>
+                长沙大包子；路过可买，不当正餐主线。</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-header"><h3 class="card-title">🍽️ 正餐湘菜（长沙老字号）</h3><div class="card-badge">坐下来吃</div></div>
+            <div class="card-content">
+              <img class="food-photo" src="images/yuloudong.jpg" alt="玉楼东">
+              <div style="background:var(--bg-2);padding:1rem;border-radius:0.5rem;margin-bottom:1rem;">
+                <h4 style="margin:0 0 0.5rem;color:var(--primary);">玉楼东（北正街旗舰）</h4>
+                <p>📍 北正街32–40号<br>
+                长沙老字号湘菜，少网红滤镜；适合想吃「正经一顿」时。</p>
+              </div>
+              <div style="background:var(--bg-2);padding:1rem;border-radius:0.5rem;margin-bottom:1rem;">
+                <h4 style="margin:0 0 0.5rem;color:var(--primary);">笨罗卜浏阳菜馆（育英街）⭐微博本地高频</h4>
+                <p>📍 育英街14号（黄兴铜像附近）| 人均约 ¥40<br>
+                微博本地帖常推：醋蒸鸡、酸菜炒粉皮；平价烟火。<strong>勿去太平街店</strong>（游客线）。</p>
+              </div>
+              <div style="background:var(--bg-2);padding:1rem;border-radius:0.5rem;">
+                <h4 style="margin:0 0 0.5rem;color:var(--accent);">点单速查（长沙特有组合）</h4>
+                <ul class="list">
+                  <li>口味虾（黄娭毑）+ 冰粉/酸梅汤</li>
+                  <li>玉楼东正经一顿湘菜</li>
+                  <li>酱板鸭真空装</li>
+                  <li>茶颜 · 幽兰拿铁</li>
+                  <li>粉面：甘长顺 / 杨裕兴 / 八一桥</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+        <!-- 必游景点：高德 × 她的喜好 -->
+    <section class="section" id="attractions">
+      <div class="container">
+        <div class="section-header">
+          <h2 class="section-title">🧭 景点 × 她的喜好（高德全量对照）</h2>
+          <p class="section-subtitle">不是「长沙必去清单」，是按微博可观察偏好打分 · 高匹配才值得排进日程</p>
+        </div>
+
+        <div class="card" style="margin-bottom:1.5rem;border:1px solid var(--primary);">
+          <div class="card-content">
+            <h3 style="margin:0 0 0.75rem;color:var(--primary);">先说结论：现有景点她喜不喜欢？</h3>
+            <ul class="list">
+              <li><strong>真喜欢（高匹配）</strong>：湖南博物院、滨江文化园/北辰滨江公园、长沙博物馆+市图、黄娭毑/玉楼东/甘长顺 — 对应「博物馆听讲解」「水岸疗愈」「排行榜本地吃」（<strong>坡子街已因避雷删除</strong>）</li>
+              <li><strong>能接受但要控量（中匹配）</strong>：橘子洲头（江边慢走+雕塑即可）、IFS/茶颜（吹空调逛街）、岳麓<strong>书院平路</strong>（文化感，不爬山）</li>
+              <li><strong>不太像她（低匹配）</strong>：岳麓山登山/索道、天心阁登楼、文和友超长队、远郊梅溪湖拉练 — 撞上她原话「体力差到逛景点像是煎熬」「十一堵车」「排队永远靠前才爽」</li>
+            </ul>
+            <p style="margin:0.75rem 0 0;font-size:0.85rem;color:var(--text-3);">评分依据：微博原话（逛景点煎熬 / 睡到自然醒 / 博物馆美术馆公园日 / 横滨式水岸公园 / 排行榜餐厅）+ 国庆拥堵成本 + 距北辰洲际远近（高德）。</p>
+          </div>
+        </div>
+
+        <div style="overflow-x:auto;margin-bottom:1.5rem;">
+          <table style="width:100%;border-collapse:collapse;font-size:0.88rem;background:var(--bg-1);border-radius:0.75rem;overflow:hidden;">
+            <thead>
+              <tr style="background:var(--bg-2);text-align:left;">
+                <th style="padding:0.75rem;">高德景点</th>
+                <th style="padding:0.75rem;">匹配</th>
+                <th style="padding:0.75rem;">对应她的哪条喜好</th>
+                <th style="padding:0.75rem;">国庆建议</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr style="border-top:1px solid var(--border);">
+                <td style="padding:0.75rem;"><strong>湖南博物院</strong><br><span style="color:var(--text-3);font-size:0.8rem;">东风路50号 · 近酒店</span></td>
+                <td style="padding:0.75rem;color:var(--success);"><strong>★★★★★</strong></td>
+                <td style="padding:0.75rem;">「最开心的博物馆美术馆公园日」+ 爱听讲解典故</td>
+                <td style="padding:0.75rem;"><strong>必做主线</strong> · 预约讲解/语音</td>
+              </tr>
+              <tr style="border-top:1px solid var(--border);background:var(--bg-2);">
+                <td style="padding:0.75rem;"><strong>滨江文化园 / 北辰滨江公园</strong><br><span style="color:var(--text-3);font-size:0.8rem;">酒店步行可达</span></td>
+                <td style="padding:0.75rem;color:var(--success);"><strong>★★★★★</strong></td>
+                <td style="padding:0.75rem;">横滨帖：比过「上海滨江 / 金鸡湖 / 维港」；公园让时间变慢</td>
+                <td style="padding:0.75rem;"><strong>每日可回血</strong> · 首选</td>
+              </tr>
+              <tr style="border-top:1px solid var(--border);">
+                <td style="padding:0.75rem;"><strong>长沙博物馆 + 长沙市图书馆</strong><br><span style="color:var(--text-3);font-size:0.8rem;">三馆一厅 · 酒店旁</span></td>
+                <td style="padding:0.75rem;color:var(--success);"><strong>★★★★☆</strong></td>
+                <td style="padding:0.75rem;">伦敦大英图书馆静谧感；室内、近、可撤退</td>
+                <td style="padding:0.75rem;"><strong>下雨/累了备选</strong></td>
+              </tr>
+              <tr style="border-top:1px solid var(--border);background:var(--bg-2);">
+                <td style="padding:0.75rem;"><strong>烈士公园</strong><br><span style="color:var(--text-3);font-size:0.8rem;">东风路 · 省博旁</span></td>
+                <td style="padding:0.75rem;color:var(--success);"><strong>★★★★☆</strong></td>
+                <td style="padding:0.75rem;">公园疗愈 + 情侣慢走；微博攻略常接在省博后</td>
+                <td style="padding:0.75rem;"><strong>10/2 下午首选</strong></td>
+              </tr>
+              <tr style="border-top:1px solid var(--border);background:var(--bg-2);">
+                <td style="padding:0.75rem;"><strong>黄娭毑 / 玉楼东 / 甘长顺</strong><br><span style="color:var(--text-3);font-size:0.8rem;">非游客街本地馆</span></td>
+                <td style="padding:0.75rem;color:var(--success);"><strong>★★★★☆</strong></td>
+                <td style="padding:0.75rem;">排行榜本地吃 + 性价比；避开游客街踩雷</td>
+                <td style="padding:0.75rem;"><strong>吃日主线</strong></td>
+              </tr>
+              <tr style="border-top:1px solid var(--border);">
+                <td style="padding:0.75rem;"><strong>坡子街（含火宫殿/鱼嘴巴）</strong></td>
+                <td style="padding:0.75rem;color:var(--danger,#c0392b);"><strong>☆☆☆☆☆</strong></td>
+                <td style="padding:0.75rem;">有人明确避雷；游客街踩雷风险高</td>
+                <td style="padding:0.75rem;"><strong>整条不进</strong></td>
+              </tr>
+              <tr style="border-top:1px solid var(--border);">
+                <td style="padding:0.75rem;"><strong>谢子龙影像艺术馆 / 李自健美术馆</strong><br><span style="color:var(--text-3);font-size:0.8rem;">洋湖 · 驾车约30分钟</span></td>
+                <td style="padding:0.75rem;color:var(--warning);"><strong>★★★★☆</strong> 偏好高 / 距离扣分</td>
+                <td style="padding:0.75rem;">外滩美术馆、影像展、艺术建筑 — 类型极合；国庆跨城成本高</td>
+                <td style="padding:0.75rem;">体力好时<strong>可替换天心阁</strong>；累了砍</td>
+              </tr>
+              <tr style="border-top:1px solid var(--border);background:var(--bg-2);">
+                <td style="padding:0.75rem;"><strong>橘子洲头</strong><br><span style="color:var(--text-3);font-size:0.8rem;">免费 · 江心</span></td>
+                <td style="padding:0.75rem;color:var(--warning);"><strong>★★★☆☆</strong></td>
+                <td style="padding:0.75rem;">水岸尚可；微博踩雷：全岛徒步会累垮</td>
+                <td style="padding:0.75rem;">观光车去雕塑 · <strong>2h 封顶</strong></td>
+              </tr>
+              <tr style="border-top:1px solid var(--border);">
+                <td style="padding:0.75rem;"><strong>岳麓书院（仅平路）</strong></td>
+                <td style="padding:0.75rem;color:var(--warning);"><strong>★★★☆☆</strong></td>
+                <td style="padding:0.75rem;">京都寺庙式文化深度；「深度探索一座城」</td>
+                <td style="padding:0.75rem;">可选 · <strong>禁止连爬岳麓山</strong></td>
+              </tr>
+              <tr style="border-top:1px solid var(--border);background:var(--bg-2);">
+                <td style="padding:0.75rem;"><strong>IFS / 五一茶颜</strong></td>
+                <td style="padding:0.75rem;color:var(--warning);"><strong>★★★☆☆</strong></td>
+                <td style="padding:0.75rem;">逛街有记录，但非旅行主线；空调休息有用</td>
+                <td style="padding:0.75rem;">省博后顺路 · 可跳过</td>
+              </tr>
+              <tr style="border-top:1px solid var(--border);">
+                <td style="padding:0.75rem;"><strong>超级文和友</strong></td>
+                <td style="padding:0.75rem;color:var(--warning);"><strong>★★☆☆☆</strong></td>
+                <td style="padding:0.75rem;">美食打卡属性强，但她要「排队叫号永远靠前」</td>
+                <td style="padding:0.75rem;">队&gt;40min <strong>立刻换本地虾馆</strong></td>
+              </tr>
+              <tr style="border-top:1px solid var(--border);background:var(--bg-2);">
+                <td style="padding:0.75rem;"><strong>天心阁</strong></td>
+                <td style="padding:0.75rem;color:var(--danger,#c0392b);"><strong>★★☆☆☆</strong></td>
+                <td style="padding:0.75rem;">典型「来都来了」登楼景点，缺她的文化/水岸锚点</td>
+                <td style="padding:0.75rem;"><strong>默认可砍</strong> · 换酒店发呆也行</td>
+              </tr>
+              <tr style="border-top:1px solid var(--border);">
+                <td style="padding:0.75rem;"><strong>岳麓山风景名胜区 / 索道 / 云麓宫</strong></td>
+                <td style="padding:0.75rem;color:var(--danger,#c0392b);"><strong>★☆☆☆☆</strong></td>
+                <td style="padding:0.75rem;">直接撞「逛景点像煎熬」+ 新疆后体力账单</td>
+                <td style="padding:0.75rem;"><strong>国庆优先删除</strong></td>
+              </tr>
+              <tr style="border-top:1px solid var(--border);background:var(--bg-2);">
+                <td style="padding:0.75rem;"><strong>梅溪湖公园 / 音乐喷泉 / 桃花岭</strong></td>
+                <td style="padding:0.75rem;color:var(--danger,#c0392b);"><strong>★★☆☆☆</strong></td>
+                <td style="padding:0.75rem;">水岸类型尚可，但远+堵=十一高风险</td>
+                <td style="padding:0.75rem;">本次<strong>不排</strong></td>
+              </tr>
+              <tr style="border-top:1px solid var(--border);">
+                <td style="padding:0.75rem;"><strong>太平老街 / 杜甫江阁 / 古开福寺</strong></td>
+                <td style="padding:0.75rem;color:var(--warning);"><strong>★★☆☆☆</strong></td>
+                <td style="padding:0.75rem;">类型尚可，但与坡子街游客动线重叠</td>
+                <td style="padding:0.75rem;"><strong>本次不排</strong></td>
+              </tr>
+              <tr style="border-top:1px solid var(--border);background:var(--bg-2);">
+                <td style="padding:0.75rem;"><strong>咸嘉湖 / 橘子洲恐龙园 / 小火车</strong></td>
+                <td style="padding:0.75rem;color:var(--danger,#c0392b);"><strong>★☆☆☆☆</strong></td>
+                <td style="padding:0.75rem;">亲子/二次消费打卡，语料无对应偏好</td>
+                <td style="padding:0.75rem;">忽略</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="section-header" style="margin-top:0.5rem;">
+          <h3 class="section-title" style="font-size:1.35rem;">行程里保留的景点卡</h3>
+          <p class="section-subtitle">只放高/中匹配；低匹配已降级为可选或删除</p>
+        </div>
+        <div class="grid grid-responsive">
+          <div class="card">
+            <div class="card-header"><h3 class="card-title">🏺 湖南博物院</h3><div class="card-badge" style="background:var(--success);">她会喜欢</div></div>
+            <div class="card-content">
+              <img class="food-photo" src="images/museum.jpg" alt="省博">
+              <p>📍 东风路50号 · 预约入馆<br>
+              <strong>为何匹配：</strong>马王堆+讲解=她福州「博物馆日」同款结构<br>
+              <strong>玩法：</strong>只看镇馆，不追求全馆刷完</p>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-header"><h3 class="card-title">🌊 滨江文化园</h3><div class="card-badge" style="background:var(--success);">她会喜欢</div></div>
+            <div class="card-content">
+              <img class="food-photo" src="images/binjiang.jpg" alt="滨江">
+              <p>📍 酒店旁 · 三馆一厅/景观塔<br>
+              <strong>为何匹配：</strong>水岸公园疗愈；累了 10 分钟回房<br>
+              <strong>加分：</strong>同片区长沙博物馆/市图可进室内</p>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-header"><h3 class="card-title">🍊 橘子洲头</h3><div class="card-badge">控量可去</div></div>
+            <div class="card-content">
+              <img class="food-photo" src="images/juzizhou.jpg" alt="橘子洲">
+              <p>📍 橘子洲头2号 · 地铁橘子洲·青莲<br>
+              <strong>为何半匹配：</strong>江景 Citywalk OK，全岛拉练不行<br>
+              <strong>玩法：</strong>雕塑打卡就撤，不走穿</p>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-header"><h3 class="card-title">📕 岳麓书院</h3><div class="card-badge">可选平路</div></div>
+            <div class="card-content">
+              <img class="food-photo" src="images/yuelu.jpg" alt="岳麓">
+              <p>📍 麓山路273号<br>
+              <strong>为何半匹配：</strong>文化深度像京都；<strong>山体景区整包不推荐</strong><br>
+              <strong>红线：</strong>不排索道、不登顶</p>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-header"><h3 class="card-title">🏛️ 长沙博物馆 + 市图书馆</h3><div class="card-badge">室内备选</div></div>
+            <div class="card-content">
+              <img class="food-photo" src="images/changsha-museum.jpg" alt="长沙博物馆">
+              <p>📍 栖凤路与湘江北路交汇西南150米 · 洲际驾车 <strong>0.6 km / 约 5 分钟</strong><br>
+              <strong>为何匹配：</strong>三馆一厅室内文化点，下雨/太热随时撤退<br>
+              <strong>高德评分：</strong>4.6 · 就在滨江文化园旁边</p>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-header"><h3 class="card-title">📷 谢子龙 / 李自健</h3><div class="card-badge">偏好合·远</div></div>
+            <div class="card-content">
+              <img class="food-photo" src="images/xiezilong.jpg" alt="谢子龙影像艺术馆">
+              <p>📍 潇湘南路一段 · 洲际驾车 <strong>16.0 km / 约 29 分钟</strong>（高德实测）<br>
+              <strong>为何匹配：</strong>美术馆/影像馆类型她明确喜欢<br>
+              <strong>开放：</strong>李自健 周二至周日 09:30–17:30（周一闭馆）<br>
+              <strong>代价：</strong>国庆路程易堵；建议替换「天心阁日」而不是硬加一天</p>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-header"><h3 class="card-title">🏯 天心阁</h3><div class="card-badge">默认跳过</div></div>
+            <div class="card-content">
+              <img class="food-photo" src="images/tianxin.jpg" alt="天心阁">
+              <p>📍 天心路17号<br>
+              <strong>为何低匹配：</strong>登楼清单型景点，缺她的锚点<br>
+              <strong>建议：</strong>返程日优先酒店慢活 / 特产，不必为打卡登楼</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+        <!-- 打卡机位 -->
+    <section class="section" id="spots">
+      <div class="container">
+        <div class="section-header">
+          <h2 class="section-title">📷 打卡机位图鉴</h2>
+          <p class="section-subtitle">站哪里、什么光线、怎么避开人头墙</p>
+        </div>
+        <div class="grid grid-responsive">
+          <div class="card">
+            <img class="food-photo" src="images/juzizhou.jpg" alt="雕塑机位" style="height:200px;">
+            <div class="card-content">
+              <h3 style="margin:0 0 0.5rem;">橘子洲 · 青年毛泽东雕塑</h3>
+              <ul class="list">
+                <li><strong>机位A</strong>：正面偏右45°，拍面部轮廓</li>
+                <li><strong>机位B</strong>：侧面+江面，竖构图人像</li>
+                <li><strong>时间</strong>：9–11点；国庆尽量8:30前到位</li>
+              </ul>
+            </div>
+          </div>
+          <div class="card">
+            <img class="food-photo" src="images/yuelu.jpg" alt="书院机位" style="height:200px;">
+            <div class="card-content">
+              <h3 style="margin:0 0 0.5rem;">岳麓书院 · 门联 / 红墙</h3>
+              <ul class="list">
+                <li><strong>机位</strong>：「惟楚有材」门正面，等人潮空档连拍</li>
+                <li><strong>爱晚亭</strong>：亭檐仰拍或侧后方，避开正门拥堵</li>
+              </ul>
+            </div>
+          </div>
+          <div class="card">
+            <img class="food-photo" src="images/binjiang-tower.jpg" alt="景观塔" style="height:200px;">
+            <div class="card-content">
+              <h3 style="margin:0 0 0.5rem;">滨江文化园 · 景观塔</h3>
+              <ul class="list">
+                <li>抵达日黄金机位；黄昏逆光建筑线条</li>
+                <li>江边步道拍对岸夜景，三脚架友好</li>
+              </ul>
+            </div>
+          </div>
+          <div class="card">
+            <img class="food-photo" src="images/huangayi.jpg" alt="黄娭毑" style="height:200px;">
+            <div class="card-content">
+              <h3 style="margin:0 0 0.5rem;">黄娭毑口味虾</h3>
+              <ul class="list">
+                <li>虾上桌先拍手套+红油，再开吃</li>
+                <li>点微辣/冒辣；两人分一份即可</li>
+              </ul>
+            </div>
+          </div>
+          <div class="card">
+            <img class="food-photo" src="images/wenheyou.jpg" alt="文和友机位" style="height:200px;">
+            <div class="card-content">
+              <h3 style="margin:0 0 0.5rem;">超级文和友</h3>
+              <ul class="list">
+                <li>永远街霓虹、老阳台俯拍</li>
+                <li>人多就拍局部招牌/餐盘，别死磕空镜</li>
+              </ul>
+            </div>
+          </div>
+          <div class="card">
+            <img class="food-photo" src="images/ifs.jpg" alt="IFS" style="height:200px;">
+            <div class="card-content">
+              <h3 style="margin:0 0 0.5rem;">IFS / 五一</h3>
+              <ul class="list">
+                <li>中庭仰拍玻璃幕墙；外立面夜景</li>
+                <li>茶颜杯子特写 + 商场灯光</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+        <!-- 实用攻略 -->
+    <section class="section" id="tips">
+      <div class="container">
+        <div class="section-header">
+          <h2 class="section-title">💡 真·实用秘籍</h2>
+          <p class="section-subtitle">删掉「地铁有几号线」「微信能付钱」这类废话 · 只留会影响体验的</p>
+        </div>
+
+        <div class="grid grid-responsive">
+          <div class="card">
+            <div class="card-header">
+              <h3 class="card-title">🧍 节奏与体力</h3>
+              <div class="card-badge">她最在意</div>
+            </div>
+            <div class="card-content">
+              <ul class="list">
+                <li><strong>一天一事</strong>：每天最多 1 个「必须完成」；其余全是可跳过</li>
+                <li><strong>睡够再出门</strong>：比早起避峰更重要——她公开夸过「睡到自然醒」的旅行</li>
+                <li><strong>胜利条件</strong>：吃得好 + 没吵起来 + 回得了酒店，不追求打卡齐</li>
+                <li><strong>撤退合法</strong>：说「回酒店」不用找理由；洲际就是备选终点</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-header">
+              <h3 class="card-title">🚦 国庆怎么少受罪</h3>
+              <div class="card-badge">她讨厌堵与挤</div>
+            </div>
+            <div class="card-content">
+              <ul class="list">
+                <li><strong>南站→洲际</strong>：带行李<strong>打车</strong>，别考验地铁换乘耐心</li>
+                <li><strong>热门店</strong>：文和友看队再进（微博吐槽排队极多）；<strong>坡子街整条不进</strong>（避雷×28）</li>
+                <li><strong>橘子洲</strong>：坐观光车/小火车去雕塑，禁止全岛徒步（本地踩雷共识）</li>
+                <li><strong>岳麓山</strong>：国庆索道/登山优先砍；书院平路才考虑</li>
+                <li><strong>返程</strong>：南站预留 60–90 分钟；宁可早到喝咖啡，别卡点焦虑</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-header">
+              <h3 class="card-title">🌶️ 吃：少踩雷</h3>
+              <div class="card-badge">本地馆优先</div>
+            </div>
+            <div class="card-content">
+              <ul class="list">
+                <li>点单先说 <strong>「冒辣」</strong>（别信微辣）；备冰粉/酸梅汤</li>
+                <li><strong>口味虾</strong>：手套 + 一份两人分 + 清汤面吸汤；黄娭毑优先</li>
+                <li><strong>文和友</strong>：≤40min 才进；本地人帖直接劝「别凑热闹」</li>
+                <li><strong>粉面</strong>：甘长顺/杨裕兴；拒绝坡子/太平/五一主街粉</li>
+                <li><strong>正餐</strong>：玉楼东或笨罗卜育英街（醋蒸鸡、酸菜炒粉皮）</li>
+                <li><strong>特产</strong>：酱板鸭真空；臭豆腐南站装；槟榔别跟风</li>
+                <li>她吃得开心时少打断拍照</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-header">
+              <h3 class="card-title">📋 你要提前搞定的事</h3>
+              <div class="card-badge">别丢给她规划</div>
+            </div>
+            <div class="card-content">
+              <ul class="list">
+                <li><strong>省博预约</strong>：微信/支付宝「湖南省博物馆」，约提前5天、约20:00放票；证件原件</li>
+                <li><strong>高铁</strong>：去程卡 11:50 长沙南；返程车次定死并写进备忘录</li>
+                <li><strong>备选清单</strong>：下雨→滨江室内馆/酒店；太累→只吃+茶颜；太挤→砍景点保吃饭</li>
+                <li>出发前再看一眼高德天气，薄外套+折叠伞即可</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-header">
+              <h3 class="card-title">🏨 洲际怎么用好</h3>
+              <div class="card-badge">舒适锚点</div>
+            </div>
+            <div class="card-content">
+              <ul class="list">
+                <li>累了优先回酒店：洗澡、睡觉、点客房——比硬撑景点更符合她</li>
+                <li>周边：茶颜（北辰荟）、八一桥粉、酱板鸭、滨江慢走</li>
+                <li>地铁：北辰三角洲 1 号线；去五一/省博够用，细节不必背线路图</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-header">
+              <h3 class="card-title">🗣️ 两句有用的长沙话</h3>
+              <div class="card-badge">点餐够用</div>
+            </div>
+            <div class="card-content">
+              <ul class="list">
+                <li><strong>冒辣</strong> = 尽量不辣（点餐救命；优先用这个）</li>
+                <li><strong>微辣</strong> = 仍可能超预期，慎用</li>
+                <li>其余长沙话好玩但不影响行程，可跳过</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-header">
+              <h3 class="card-title">📌 微博手册速查</h3>
+              <div class="card-badge">详尽版入口</div>
+            </div>
+            <div class="card-content">
+              <ul class="list">
+                <li>完整对照表、原话摘录、点单细化 → <a href="#weibo">微博本地手册</a></li>
+                <li>每日行程里的「📓 微博札记」= 当天可执行版</li>
+                <li>原始数据：<code>weibo_data/changsha_local/</code>（3060 帖）</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+        <!-- 相册画廊 -->
+    <section class="section" id="gallery">
+      <div class="container">
+        <div class="section-header">
+          <h2 class="section-title">📸 相册画廊</h2>
+          <p class="section-subtitle">酒店 · 机位 · 本地馆子</p>
+        </div>
+        <div class="grid grid-responsive">
+          <div class="card">
+            <img style="width:100%;height:200px;object-fit:cover;border-radius:0.5rem;margin-bottom:1rem;" src="images/hotel.jpg" alt="北辰洲际" loading="lazy">
+            <div class="card-content"><h3 style="margin:0 0 0.5rem;">北辰洲际</h3>
+            <p style="color:var(--text-3);font-size:0.875rem;">住宿基地</p></div>
+          </div>
+          <div class="card">
+            <img style="width:100%;height:200px;object-fit:cover;border-radius:0.5rem;margin-bottom:1rem;" src="images/binjiang.jpg" alt="滨江文化园" loading="lazy">
+            <div class="card-content"><h3 style="margin:0 0 0.5rem;">滨江文化园</h3>
+            <p style="color:var(--text-3);font-size:0.875rem;">10/1 下午</p></div>
+          </div>
+          <div class="card">
+            <img style="width:100%;height:200px;object-fit:cover;border-radius:0.5rem;margin-bottom:1rem;" src="images/binjiang-tower.jpg" alt="景观塔机位" loading="lazy">
+            <div class="card-content"><h3 style="margin:0 0 0.5rem;">景观塔机位</h3>
+            <p style="color:var(--text-3);font-size:0.875rem;">抵达日打卡</p></div>
+          </div>
+          <div class="card">
+            <img style="width:100%;height:200px;object-fit:cover;border-radius:0.5rem;margin-bottom:1rem;" src="images/museum.jpg" alt="湖南博物院" loading="lazy">
+            <div class="card-content"><h3 style="margin:0 0 0.5rem;">湖南博物院</h3>
+            <p style="color:var(--text-3);font-size:0.875rem;">10/2</p></div>
+          </div>
+          <div class="card">
+            <img style="width:100%;height:200px;object-fit:cover;border-radius:0.5rem;margin-bottom:1rem;" src="images/juzizhou.jpg" alt="橘子洲雕塑" loading="lazy">
+            <div class="card-content"><h3 style="margin:0 0 0.5rem;">橘子洲雕塑</h3>
+            <p style="color:var(--text-3);font-size:0.875rem;">10/3 机位A/B</p></div>
+          </div>
+          <div class="card">
+            <img style="width:100%;height:200px;object-fit:cover;border-radius:0.5rem;margin-bottom:1rem;" src="images/yuelu.jpg" alt="岳麓书院" loading="lazy">
+            <div class="card-content"><h3 style="margin:0 0 0.5rem;">岳麓书院</h3>
+            <p style="color:var(--text-3);font-size:0.875rem;">门联打卡</p></div>
+          </div>
+          <div class="card">
+            <img style="width:100%;height:200px;object-fit:cover;border-radius:0.5rem;margin-bottom:1rem;" src="images/wenheyou.jpg" alt="超级文和友" loading="lazy">
+            <div class="card-content"><h3 style="margin:0 0 0.5rem;">超级文和友</h3>
+            <p style="color:var(--text-3);font-size:0.875rem;">10/4</p></div>
+          </div>
+          <div class="card">
+            <img style="width:100%;height:200px;object-fit:cover;border-radius:0.5rem;margin-bottom:1rem;" src="images/huangayi.jpg" alt="黄娭毑" loading="lazy">
+            <div class="card-content"><h3 style="margin:0 0 0.5rem;">黄娭毑</h3>
+            <p style="color:var(--text-3);font-size:0.875rem;">高正街本地虾馆</p></div>
+          </div>
+          <div class="card">
+            <img style="width:100%;height:200px;object-fit:cover;border-radius:0.5rem;margin-bottom:1rem;" src="images/bayi-fen.jpg" alt="八一桥粉馆" loading="lazy">
+            <div class="card-content"><h3 style="margin:0 0 0.5rem;">八一桥原味粉馆</h3>
+            <p style="color:var(--text-3);font-size:0.875rem;">北辰奥城 · 本地米粉</p></div>
+          </div>
+          <div class="card">
+            <img style="width:100%;height:200px;object-fit:cover;border-radius:0.5rem;margin-bottom:1rem;" src="images/ganchangshun.jpg" alt="甘长顺" loading="lazy">
+            <div class="card-content"><h3 style="margin:0 0 0.5rem;">甘长顺</h3>
+            <p style="color:var(--text-3);font-size:0.875rem;">本地粉面</p></div>
+          </div>
+          <div class="card">
+            <img style="width:100%;height:200px;object-fit:cover;border-radius:0.5rem;margin-bottom:1rem;" src="images/xiangqun.jpg" alt="向群锅饺" loading="lazy">
+            <div class="card-content"><h3 style="margin:0 0 0.5rem;">向群锅饺</h3>
+            <p style="color:var(--text-3);font-size:0.875rem;">早餐</p></div>
+          </div>
+          <div class="card">
+            <img style="width:100%;height:200px;object-fit:cover;border-radius:0.5rem;margin-bottom:1rem;" src="images/chayan.jpg" alt="茶颜悦色" loading="lazy">
+            <div class="card-content"><h3 style="margin:0 0 0.5rem;">茶颜悦色</h3>
+            <p style="color:var(--text-3);font-size:0.875rem;">北辰/五一</p></div>
+          </div>
+          <div class="card">
+            <img style="width:100%;height:200px;object-fit:cover;border-radius:0.5rem;margin-bottom:1rem;" src="images/ifs.jpg" alt="IFS" loading="lazy">
+            <div class="card-content"><h3 style="margin:0 0 0.5rem;">IFS</h3>
+            <p style="color:var(--text-3);font-size:0.875rem;">逛街机位</p></div>
+          </div>
+          <div class="card">
+            <img style="width:100%;height:200px;object-fit:cover;border-radius:0.5rem;margin-bottom:1rem;" src="images/tianxin.jpg" alt="天心阁" loading="lazy">
+            <div class="card-content"><h3 style="margin:0 0 0.5rem;">天心阁</h3>
+            <p style="color:var(--text-3);font-size:0.875rem;">10/5</p></div>
+          </div>
+        </div>
+        <p style="text-align:center;color:var(--text-3);margin-top:2rem;">高德 POI 实景 · 本地 images/</p>
+      </div>
+    </section>
+
+        <!-- 页脚 -->
+    <footer style="background: var(--bg-2); padding: 2rem 0; margin-top: 4rem;">
+      <div class="container">
+        <div style="text-align: center;">
+          <p style="color: var(--text-3); margin-bottom: 1rem;">
+            杭州出发 · 北辰洲际 · 长沙南11:50抵达 · 2026.10.1–10.5
+          </p>
+          <p style="color: var(--text-3); font-size: 0.875rem;">
+            旅行提示：长沙湘菜较辣，不能吃辣的游客可选择微辣或不辣菜品。橘子洲、岳麓山步行较多，建议穿舒适运动鞋。
+          </p>
+        </div>
+      </div>
+    </footer>
+  </main>
+
+  <!-- 浮动操作按钮 -->
+  <div class="fab-container">
+    <button class="fab fab-secondary" id="copyPlan" title="复制当日计划">
+      📋
+    </button>
+    <button class="fab fab-secondary" id="printPage" title="打印页面">
+      🖨️
+    </button>
+    <button class="fab" id="backTop" title="回到顶部">
+      ↑
+    </button>
+  </div>
+
+  <script>
+    // 长沙旅行攻略应用
+    class ChangshaTravelApp {
+      constructor() {
+        this.init();
+      }
+
+      async init() {
+        await this.initTheme();
+        this.initNavigation();
+        this.initSearch();
+        this.initFloatingButtons();
+        this.initDateAndBrief();
+        this.initAnimations();
+        this.hideLoading();
+      }
+
+      // 主题切换
+      initTheme() {
+        const themeToggle = document.getElementById('themeToggle');
+        const themeIcon = document.getElementById('themeIcon');
+        const currentTheme = localStorage.getItem('changsha-theme') || 'dark';
+        
+        document.body.setAttribute('data-theme', currentTheme);
+        themeIcon.textContent = currentTheme === 'dark' ? '🌙' : '☀️';
+
+        themeToggle.addEventListener('click', () => {
+          const newTheme = document.body.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+          document.body.setAttribute('data-theme', newTheme);
+          localStorage.setItem('changsha-theme', newTheme);
+          themeIcon.textContent = newTheme === 'dark' ? '🌙' : '☀️';
+          
+          // 主题切换动画
+          document.body.style.transition = 'all 0.3s ease';
+          setTimeout(() => {
+            document.body.style.transition = '';
+          }, 300);
+        });
+      }
+
+      // 导航功能
+      initNavigation() {
+        const navbar = document.getElementById('navbar');
+        
+        // 滚动效果
+        let ticking = false;
+        window.addEventListener('scroll', () => {
+          if (!ticking) {
+            requestAnimationFrame(() => {
+              const scrollTop = window.pageYOffset;
+              
+              if (scrollTop > 100) {
+                navbar.classList.add('scrolled');
+              } else {
+                navbar.classList.remove('scrolled');
+              }
+              
+              this.updateActiveNavLink();
+              ticking = false;
+            });
+            ticking = true;
+          }
+        });
+
+        // 平滑滚动
+        document.querySelectorAll('a[href^="#"]').forEach(link => {
+          link.addEventListener('click', (e) => {
+            e.preventDefault();
+            const target = document.querySelector(link.getAttribute('href'));
+            if (target) {
+              target.scrollIntoView({
+                behavior: 'smooth',
+                block: 'start'
+              });
+            }
+          });
+        });
+      }
+
+      updateActiveNavLink() {
+        const sections = ['depart', 'itinerary', 'food', 'attractions', 'spots', 'tips', 'gallery'];
+        const navLinks = document.querySelectorAll('.nav-link');
+        
+        let current = '';
+        sections.forEach(sectionId => {
+          const section = document.getElementById(sectionId);
+          if (section) {
+            const rect = section.getBoundingClientRect();
+            if (rect.top <= 100 && rect.bottom >= 100) {
+              current = sectionId;
+            }
+          }
+        });
+
+        navLinks.forEach(link => {
+          link.classList.remove('active');
+          if (link.getAttribute('href') === `#${current}`) {
+            link.classList.add('active');
+          }
+        });
+      }
+
+      // 搜索功能
+      initSearch() {
+        const searchInput = document.getElementById('searchInput');
+        let searchTimeout;
+        
+        searchInput.addEventListener('input', (e) => {
+          clearTimeout(searchTimeout);
+          const query = e.target.value.toLowerCase().trim();
+          
+          searchTimeout = setTimeout(() => {
+            this.performSearch(query);
+          }, 300);
+        });
+      }
+
+      performSearch(query) {
+        const cards = document.querySelectorAll('.card');
+        
+        if (!query) {
+          cards.forEach(card => {
+            card.style.opacity = '1';
+            card.style.transform = 'translateY(0)';
+          });
+          return;
+        }
+
+        cards.forEach(card => {
+          const text = card.textContent.toLowerCase();
+          if (text.includes(query)) {
+            card.style.opacity = '1';
+            card.style.transform = 'translateY(0)';
+            card.style.border = '1px solid var(--primary)';
+          } else {
+            card.style.opacity = '0.3';
+            card.style.transform = 'translateY(10px)';
+            card.style.border = '';
+          }
+        });
+      }
+
+      // 浮动按钮
+      initFloatingButtons() {
+        const backTop = document.getElementById('backTop');
+        const printPage = document.getElementById('printPage');
+        const copyPlan = document.getElementById('copyPlan');
+
+        backTop.addEventListener('click', () => {
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        printPage.addEventListener('click', () => {
+          window.print();
+        });
+
+        copyPlan.addEventListener('click', () => {
+          this.copyCurrentDayPlan();
+        });
+
+        // 显示/隐藏浮动按钮
+        window.addEventListener('scroll', () => {
+          const fabContainer = document.querySelector('.fab-container');
+          if (window.pageYOffset > 300) {
+            fabContainer.style.opacity = '1';
+            fabContainer.style.transform = 'translateY(0)';
+          } else {
+            fabContainer.style.opacity = '0';
+            fabContainer.style.transform = 'translateY(20px)';
+          }
+        });
+      }
+
+      copyCurrentDayPlan() {
+        const timelineItems = document.querySelectorAll('.timeline-item');
+        const viewportCenter = window.innerHeight / 2 + window.scrollY;
+        
+        let closestItem = null;
+        let closestDistance = Infinity;
+
+        timelineItems.forEach(item => {
+          const rect = item.getBoundingClientRect();
+          const itemCenter = rect.top + window.scrollY + rect.height / 2;
+          const distance = Math.abs(itemCenter - viewportCenter);
+          
+          if (distance < closestDistance) {
+            closestDistance = distance;
+            closestItem = item;
+          }
+        });
+
+        if (closestItem) {
+          const title = closestItem.querySelector('.card-title').textContent;
+          const items = Array.from(closestItem.querySelectorAll('.list li')).map(li => `• ${li.textContent}`);
+          const text = `${title}\n\n${items.join('\n')}\n\n— 长沙行程（2026.10.1–10.5）`;
+          
+          navigator.clipboard.writeText(text).then(() => {
+            this.showToast('已复制当日计划到剪贴板 ✅');
+          }).catch(() => {
+            this.showToast('复制失败，请手动选择文本 ❌');
+          });
+        }
+      }
+
+      // 日期和简报
+      initDateAndBrief() {
+        const currentDate = document.getElementById('currentDate');
+        const todayBrief = document.getElementById('todayBrief');
+        const holidayMode = document.getElementById('holidayMode');
+
+        const now = new Date();
+        currentDate.textContent = now.toLocaleDateString('zh-CN', {
+          month: 'long',
+          day: 'numeric',
+          weekday: 'short'
+        });
+
+        const updateBrief = () => {
+          const m = now.getMonth() + 1;
+          const d = now.getDate();
+          const dateMap = {
+            '10-1': '11:50长沙南→洲际→八一桥粉+滨江',
+            '10-2': '省博+烈士公园慢走，IFS可砍',
+            '10-3': '橘子洲坐车去雕塑，不走穿，岳麓可选',
+            '10-4': '黄娭毑/玉楼东·不进坡子街',
+            '10-5': '轻收尾·跳过天心阁·返杭'
+          };
+
+          const key = `${m}-${d}`;
+          const base = dateMap[key] || '查看完整长沙行程安排';
+          const tip = holidayMode.checked ? '（节日模式：各节点预留 +30 分钟，避开人流高峰）' : '';
+          
+          todayBrief.textContent = `今日建议：${base}${tip}`;
+        };
+
+        updateBrief();
+        holidayMode.addEventListener('change', updateBrief);
+      }
+
+      // 动画效果
+      initAnimations() {
+        // 交叉观察器用于入场动画
+        const observerOptions = {
+          threshold: 0.1,
+          rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('animate-in');
+            }
+          });
+        }, observerOptions);
+
+        // 为卡片添加入场动画
+        document.querySelectorAll('.card, .timeline-item').forEach((el, index) => {
+          el.style.opacity = '0';
+          el.style.transform = 'translateY(30px)';
+          el.style.transition = `opacity 0.6s ease ${index * 0.1}s, transform 0.6s ease ${index * 0.1}s`;
+          
+          observer.observe(el);
+        });
+
+        // 添加动画类
+        const style = document.createElement('style');
+        style.textContent = `
+          .animate-in {
+            opacity: 1 !important;
+            transform: translateY(0) !important;
+          }
+        `;
+        document.head.appendChild(style);
+      }
+
+      // 显示提示
+      showToast(message) {
+        // 移除现有的 toast
+        const existingToast = document.querySelector('.toast');
+        if (existingToast) {
+          existingToast.remove();
+        }
+
+        const toast = document.createElement('div');
+        toast.className = 'toast';
+        toast.textContent = message;
+        toast.style.cssText = `
+          position: fixed;
+          bottom: 120px;
+          right: 2rem;
+          background: var(--glass);
+          color: var(--text-1);
+          padding: 1rem 1.5rem;
+          border-radius: 0.75rem;
+          border: 1px solid var(--glass-border);
+          backdrop-filter: blur(20px);
+          box-shadow: var(--shadow-lg);
+          z-index: 1000;
+          transform: translateX(100%);
+          transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+          font-weight: 500;
+          white-space: nowrap;
+        `;
+        
+        document.body.appendChild(toast);
+        
+        // 入场动画
+        requestAnimationFrame(() => {
+          toast.style.transform = 'translateX(0)';
+        });
+        
+        // 自动移除
+        setTimeout(() => {
+          toast.style.transform = 'translateX(100%)';
+          setTimeout(() => {
+            if (toast.parentNode) {
+              toast.remove();
+            }
+          }, 300);
+        }, 3000);
+      }
+
+      // 隐藏加载动画
+      hideLoading() {
+        setTimeout(() => {
+          const loading = document.getElementById('loading');
+          loading.classList.add('fade-out');
+          setTimeout(() => {
+            loading.style.display = 'none';
+          }, 500);
+        }, 800);
+      }
+    }
+
+    // 初始化应用
+    document.addEventListener('DOMContentLoaded', () => {
+      new ChangshaTravelApp();
+    });
+
+    // 性能优化
+    if ('IntersectionObserver' in window) {
+      const imageObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const img = entry.target;
+            if (img.dataset.src) {
+              img.src = img.dataset.src;
+              img.removeAttribute('data-src');
+            }
+            imageObserver.unobserve(img);
+          }
+        });
+      });
+
+      document.querySelectorAll('img[loading="lazy"]').forEach(img => {
+        imageObserver.observe(img);
+      });
+    }
+
+    // 错误处理
+    window.addEventListener('error', (e) => {
+      console.error('应用错误:', e.error);
+    });
+  </script>
+</body>
+</html>

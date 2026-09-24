@@ -1,0 +1,43 @@
+    <!-- 高德交互地图 -->
+    <section class="section" id="map">
+      <div class="container">
+        <div class="section-header">
+          <h2 class="section-title">📍 高德交互地图 · 真实坐标</h2>
+          <p class="section-subtitle">零依赖轻量瓦片地图引擎 · 高德底图/POI 真实坐标 · 点标记看详情，一键唤起高德导航</p>
+        </div>
+
+        <div class="card" style="padding:0;overflow:hidden;">
+          <div class="gm-bar">
+            <div class="gm-days" id="gmDays"></div>
+            <div class="gm-tools">
+              <span class="gm-status" id="gmStatus">底图：高德瓦片</span>
+              <button class="gm-btn" id="gmLayer">切换影像</button>
+              <button class="gm-btn" id="gmFit">全览</button>
+            </div>
+          </div>
+          <div id="gmMap" class="gl-map"></div>
+          <div class="gm-hint" id="gmHint" hidden></div>
+          <div class="gm-list" id="gmList"></div>
+        </div>
+
+        <div class="grid grid-responsive" style="margin-top:1.5rem;">
+          <div class="card">
+            <div class="card-header"><h3 class="card-title">🧭 从洲际出发·驾车实测</h3><div class="card-badge">高德路径规划</div></div>
+            <div class="card-content">
+              <ul class="list" id="gmDriveList"></ul>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-header"><h3 class="card-title">⚠️ 明确避雷（已排除在动线外）</h3><div class="card-badge">不进</div></div>
+            <div class="card-content">
+              <ul class="list" id="gmAvoidList"></ul>
+            </div>
+          </div>
+        </div>
+
+        <p style="color:var(--text-3);font-size:0.85rem;text-align:center;margin-top:1rem;">
+          坐标 / 评分 / 营业时间来自高德开放平台（抓取于 2026-09-24）；驾车时长来自高德路径规划，实际以当日路况为准。<br>
+          底图联网时显示高德真实路网；离线时自动切换为按真实经纬度绘制的示意底图，标记与导航链接仍可用。
+        </p>
+      </div>
+    </section>

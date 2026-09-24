@@ -1,0 +1,122 @@
+/* ===== 高德交互地图（自研轻量瓦片引擎） ===== */
+.gm-bar {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: .75rem; flex-wrap: wrap; padding: .75rem 1rem;
+  background: var(--bg-2, #1c1917);
+  border-bottom: 1px solid var(--glass-border, rgba(255,255,255,.1));
+}
+.gm-days { display: flex; gap: .4rem; flex-wrap: wrap; }
+.gm-days button {
+  font: inherit; font-size: .82rem; font-weight: 600;
+  color: var(--text-2, #d6d3d1); background: transparent;
+  border: 1px solid var(--glass-border, rgba(255,255,255,.15));
+  border-radius: 999px; padding: .32rem .8rem; cursor: pointer; transition: all .18s ease;
+}
+.gm-days button:hover { border-color: var(--primary, #f97316); color: var(--primary, #f97316); }
+.gm-days button.on { background: var(--gradient-1, linear-gradient(135deg,#f97316,#dc2626)); color: #fff; border-color: transparent; }
+.gm-tools { display: flex; align-items: center; gap: .5rem; }
+.gm-status { font-size: .78rem; color: var(--text-3, #a8a29e); }
+.gm-btn {
+  font: inherit; font-size: .82rem; font-weight: 600; color: var(--text-1, #fafaf9);
+  background: var(--bg-3, #292524); border: 1px solid var(--glass-border, rgba(255,255,255,.12));
+  border-radius: .5rem; padding: .35rem .8rem; cursor: pointer;
+}
+.gm-btn:hover { border-color: var(--primary, #f97316); color: var(--primary, #f97316); }
+
+/* --- 画布 --- */
+.gl-map {
+  position: relative; height: 66vh; min-height: 430px; overflow: hidden;
+  background: #0f1720; cursor: grab; touch-action: none; user-select: none;
+  -webkit-user-select: none;
+}
+.gl-map.gl-grabbing { cursor: grabbing; }
+.gl-tiles, .gl-sch, .gl-lines, .gl-sch-svg { position: absolute; inset: 0; }
+.gl-sch { z-index: 1; }
+.gl-tiles { z-index: 2; }
+.gl-lines { z-index: 3; pointer-events: none; }
+.gl-pins { position: absolute; inset: 0; z-index: 4; }
+.gl-tile { position: absolute; width: 256px; height: 256px; display: block; }
+.gl-sch-svg { position: absolute; left: 0; top: 0; }
+.gl-sch-svg svg { display: block; width: 100%; height: 100%; }
+.gl-line-svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+
+.gl-pin { position: absolute; width: 22px; height: 22px; margin: -11px 0 0 -11px; cursor: pointer; }
+.gl-pin i {
+  display: block; width: 15px; height: 15px; margin: 3.5px; border-radius: 50%;
+  border: 2.5px solid #fff; box-shadow: 0 2px 8px rgba(0,0,0,.55); transition: transform .15s ease;
+}
+.gl-pin:hover i { transform: scale(1.32); }
+.gl-pin-avoid i { border-color: rgba(255,255,255,.6); border-style: dashed; opacity: .8; }
+.gl-pin[hidden] { display: none; }
+
+.gl-ctl { position: absolute; right: 12px; top: 12px; z-index: 6; display: flex; flex-direction: column; gap: 6px; }
+.gl-ctl button {
+  font: inherit; font-size: 1.15rem; font-weight: 700; line-height: 1;
+  width: 34px; height: 34px; cursor: pointer;
+  color: var(--text-1, #fafaf9); background: rgba(28,25,23,.9);
+  border: 1px solid var(--glass-border, rgba(255,255,255,.15)); border-radius: .45rem;
+  backdrop-filter: blur(8px);
+}
+.gl-ctl button:hover { border-color: var(--primary, #f97316); color: var(--primary, #f97316); }
+
+/* --- 弹窗 --- */
+.gl-pop {
+  position: absolute; z-index: 8; width: min(310px, calc(100% - 24px));
+  padding: .85rem 1rem; border-radius: .7rem;
+  background: rgba(24,22,21,.97); border: 1px solid rgba(255,255,255,.14);
+  box-shadow: 0 16px 40px rgba(0,0,0,.6); backdrop-filter: blur(12px);
+}
+.gl-pop[hidden] { display: none; }
+.gl-pop-x {
+  position: absolute; right: .4rem; top: .3rem; width: 24px; height: 24px;
+  font: inherit; font-size: 1.1rem; line-height: 1; cursor: pointer;
+  background: none; border: 0; color: var(--text-3, #a8a29e);
+}
+.gl-pop-x:hover { color: var(--primary, #f97316); }
+.gl-pop h4 { margin: 0 .9rem .45rem 0; font-size: .98rem; color: var(--primary, #f97316); display: flex; align-items: center; gap: .45rem; flex-wrap: wrap; }
+.gm-tag { font-size: .68rem; font-weight: 700; padding: .1rem .42rem; border-radius: .35rem; background: rgba(249,115,22,.18); color: #fdba74; }
+.gm-addr { margin: 0 0 .5rem; font-size: .82rem; color: #d6d3d1; }
+.gm-row { display: flex; justify-content: space-between; gap: .75rem; font-size: .8rem; padding: .14rem 0; border-bottom: 1px dashed rgba(255,255,255,.08); }
+.gm-row span { color: #a8a29e; }
+.gm-row b { color: #fafaf9; font-weight: 600; text-align: right; }
+.gm-note { margin: .5rem 0 .65rem; font-size: .8rem; line-height: 1.55; color: #d6d3d1; }
+.gm-acts { display: flex; gap: .4rem; }
+
+.gm-hint {
+  padding: .75rem 1rem; font-size: .88rem; line-height: 1.6;
+  background: rgba(217,119,6,.14); color: #fbbf24; border-top: 1px solid rgba(217,119,6,.35);
+}
+
+.gm-list {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: .6rem;
+  padding: .9rem 1rem; background: var(--bg-2, #1c1917);
+  border-top: 1px solid var(--glass-border, rgba(255,255,255,.08));
+  max-height: 340px; overflow: auto;
+}
+.gm-item { display: flex; align-items: center; gap: .6rem; padding: .55rem .7rem; border-radius: .6rem; background: var(--bg-3, #292524); }
+.gm-dot { width: 10px; height: 10px; border-radius: 50%; flex: 0 0 auto; }
+.gm-item-main { flex: 1 1 auto; min-width: 0; }
+.gm-item-main strong { display: block; font-size: .87rem; font-weight: 600; color: var(--text-1, #fafaf9); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.gm-item-main em { font-style: normal; font-size: .76rem; color: var(--text-3, #a8a29e); }
+.gm-item-acts { display: flex; gap: .35rem; flex: 0 0 auto; }
+.gm-a {
+  font: inherit; font-size: .76rem; font-weight: 600; text-decoration: none; cursor: pointer;
+  color: var(--text-1, #fafaf9); background: transparent;
+  border: 1px solid var(--glass-border, rgba(255,255,255,.2));
+  border-radius: .4rem; padding: .22rem .55rem;
+}
+.gm-a:hover { border-color: var(--primary, #f97316); color: var(--primary, #f97316); }
+.gm-a-primary { background: var(--primary, #f97316); border-color: transparent; color: #fff; }
+.gm-a-primary:hover { color: #fff; opacity: .9; }
+
+@media (max-width: 700px) {
+  .gm-bar { padding: .6rem .7rem; gap: .5rem; }
+  .gm-days { flex-wrap: nowrap; overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none; max-width: 100%; }
+  .gm-days::-webkit-scrollbar { display: none; }
+  .gm-days button { flex: 0 0 auto; font-size: .78rem; padding: .28rem .66rem; }
+  .gm-tools { width: 100%; justify-content: space-between; }
+  .gm-tools .gm-status { display: none; }
+  .gl-map { height: 60vh; min-height: 380px; }
+  .gm-list { grid-template-columns: 1fr; max-height: 300px; }
+  .gm-item-main strong { font-size: .84rem; }
+}
