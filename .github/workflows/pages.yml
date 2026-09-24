@@ -23,10 +23,9 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: 启用 Pages（如未开启则自动开启）
+      - name: 启用 Pages（已开启时无操作）
+        continue-on-error: true
         uses: actions/configure-pages@v5
-        with:
-          enablement: true
 
       - name: 只发布单文件
         run: |
