@@ -1,0 +1,108 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/PageHero.astro';
+import { rich } from '../lib/rich';
+import { url } from '../data/site';
+import {
+  zjjAvoid,
+  zjjDaysBrief,
+  zjjDrive,
+  zjjHero,
+  zjjStay,
+  zjjTickets,
+} from '../data/zhangjiajie';
+---
+
+<BaseLayout
+  title="张家界武陵源"
+  description="武陵源军地坪住宿、东门 B 线、金鞭溪、10/4 赶荷花机场飞上海。含一机游预约、砍项口令与国庆缓冲。"
+>
+  <PageHero badge={zjjHero.badge} title={`⛰️ ${zjjHero.title}`} sub={zjjHero.sub} />
+
+  <section class="sec pt-6">
+    <div class="wrap grid gap-4 md:grid-cols-2">
+      <div class="card card-flat">
+        <h2 class="mb-2 text-lg font-semibold" style="color: var(--brand);">{zjjStay.title}</h2>
+        <ul class="list-x">
+          {zjjStay.items.map((t) => <li set:html={rich(t)} />)}
+        </ul>
+      </div>
+      <div class="card card-flat">
+        <div class="card-head">
+          <h2 class="card-title">{zjjTickets.title}</h2>
+          <div class="card-badge">{zjjTickets.badge}</div>
+        </div>
+        <ul class="list-x">
+          {zjjTickets.items.map((t) => <li set:html={rich(t)} />)}
+        </ul>
+        {
+          zjjTickets.footnote && (
+            <p class="mt-3 text-xs" style="color: var(--ink-3);">
+              {zjjTickets.footnote}
+            </p>
+          )
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="sec pt-2">
+    <div class="wrap">
+      <div class="sec-head">
+        <h2 class="sec-title">📅 段内四日速览</h2>
+        <p class="sec-sub">完整时刻表见「行程」页 D2–D5；此处是执行要点</p>
+      </div>
+      <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        {
+          zjjDaysBrief.map((c) => (
+            <div class="card">
+              <div class="card-head">
+                <h3 class="card-title">{c.title}</h3>
+                <div class="card-badge">{c.badge}</div>
+              </div>
+              <ul class="list-x">
+                {c.items.map((t) => (
+                  <li set:html={rich(t)} />
+                ))}
+              </ul>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="sec pt-2">
+    <div class="wrap grid gap-4 md:grid-cols-2">
+      <div class="card">
+        <div class="card-head">
+          <h3 class="card-title">{zjjDrive.title}</h3>
+          <div class="card-badge">高德</div>
+        </div>
+        <ul class="list-x">
+          {
+            zjjDrive.rows.map((r) => (
+              <li>
+                <strong>{r.from}</strong>：{r.dist} / {r.time}
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+      <div class="card">
+        <div class="card-head">
+          <h3 class="card-title">{zjjAvoid.title}</h3>
+          <div class="card-badge">{zjjAvoid.badge}</div>
+        </div>
+        <ul class="list-x">
+          {zjjAvoid.items.map((t) => <li set:html={rich(t)} />)}
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <div class="wrap pb-8 pt-4 flex flex-wrap justify-center gap-3">
+    <a href={url('/itinerary')} class="btn btn-primary">🗺️ 看完整行程 D0–D5</a>
+    <a href={url('/map')} class="btn btn-ghost">📍 地图 POI（含武陵源）</a>
+  </div>
+</BaseLayout>

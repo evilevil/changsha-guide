@@ -1,0 +1,327 @@
+@import "tailwindcss";
+
+/* =====================================================================
+   设计令牌 —— 延续旧版「暗色玻璃拟态 + 橙粉渐变」语言
+   ===================================================================== */
+:root {
+  --bg-1: #0c0a09;
+  --bg-2: #1c1917;
+  --bg-3: #292524;
+  --ink-1: #fafaf9;
+  --ink-2: #d6d3d1;
+  --ink-3: #a8a29e;
+  --glass: rgba(28, 25, 23, 0.72);
+  --glass-border: rgba(168, 162, 158, 0.12);
+  --brand: #f97316;
+  --gradient-1: linear-gradient(135deg, #f97316 0%, #dc2626 100%);
+  --gradient-2: linear-gradient(135deg, #ec4899 0%, #8b5cf6 100%);
+  color-scheme: dark;
+}
+
+html[data-theme="light"] {
+  --bg-1: #ffffff;
+  --bg-2: #fafaf9;
+  --bg-3: #f5f5f4;
+  --ink-1: #1c1917;
+  --ink-2: #44403c;
+  --ink-3: #78716c;
+  --glass: rgba(255, 255, 255, 0.82);
+  --glass-border: rgba(168, 162, 158, 0.25);
+  color-scheme: light;
+}
+
+/* 主题色（随 data-theme 切换）→ 生成 bg-surface / text-ink-2 / border-line 等工具类 */
+@theme inline {
+  --color-surface: var(--bg-1);
+  --color-surface-2: var(--bg-2);
+  --color-surface-3: var(--bg-3);
+  --color-ink: var(--ink-1);
+  --color-ink-2: var(--ink-2);
+  --color-ink-3: var(--ink-3);
+  --color-line: var(--glass-border);
+  --font-sans: "Inter", -apple-system, BlinkMacSystemFont, "PingFang SC",
+    "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+}
+
+/* 静态品牌色 → text-brand / bg-brand / text-accent ... */
+@theme {
+  --color-brand: #f97316;
+  --color-brand-2: #ec4899;
+  --color-accent: #10b981;
+  --color-success: #059669;
+  --color-warn: #d97706;
+  --color-danger: #dc2626;
+}
+
+/* =====================================================================
+   基础
+   ===================================================================== */
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 5rem;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    background-color: var(--bg-1);
+    color: var(--ink-1);
+    font-family: var(--font-sans);
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+    background-image:
+      radial-gradient(circle at 22% 12%, rgba(249, 115, 22, 0.1) 0%, transparent 45%),
+      radial-gradient(circle at 78% 30%, rgba(236, 72, 153, 0.09) 0%, transparent 45%);
+    background-attachment: fixed;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+
+  a {
+    color: inherit;
+  }
+
+  ::-webkit-scrollbar { width: 8px; height: 8px; }
+  ::-webkit-scrollbar-track { background: var(--bg-2); }
+  ::-webkit-scrollbar-thumb { background: var(--ink-3); border-radius: 4px; }
+  ::-webkit-scrollbar-thumb:hover { background: #f97316; }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+
+  @media print {
+    nav, .no-print { display: none !important; }
+    body { background: #fff !important; color: #000 !important; }
+  }
+}
+
+/* =====================================================================
+   组件
+   ===================================================================== */
+@layer components {
+  /* 容器 */
+  .wrap {
+    @apply mx-auto w-full max-w-6xl px-4;
+  }
+  .wrap-narrow {
+    @apply mx-auto w-full max-w-3xl px-4;
+  }
+
+  /* 玻璃拟态卡片 */
+  .glass {
+    background: var(--glass);
+    border: 1px solid var(--glass-border);
+    backdrop-filter: blur(16px);
+  }
+
+  .card {
+    @apply relative overflow-hidden rounded-2xl p-5 transition-all duration-300;
+    background: var(--glass);
+    border: 1px solid var(--glass-border);
+    backdrop-filter: blur(16px);
+  }
+  .card::before {
+    content: "";
+    @apply pointer-events-none absolute inset-x-0 top-0 h-px opacity-0 transition-opacity duration-300;
+    background: linear-gradient(90deg, transparent, #f97316, transparent);
+  }
+  .card:hover {
+    @apply -translate-y-1;
+    border-color: rgba(249, 115, 22, 0.55);
+    box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.35);
+  }
+  .card:hover::before {
+    @apply opacity-100;
+  }
+  .card-flat:hover {
+    @apply translate-y-0;
+    border-color: var(--glass-border);
+    box-shadow: none;
+  }
+  .card-flat:hover::before {
+    @apply opacity-0;
+  }
+
+  .card-head {
+    @apply mb-3 flex items-center justify-between gap-3;
+  }
+  .card-title {
+    @apply text-lg font-semibold leading-snug;
+    color: var(--ink-1);
+  }
+  .card-badge {
+    @apply shrink-0 rounded-lg px-2.5 py-1 text-xs;
+    background: var(--bg-3);
+    color: var(--ink-3);
+    border: 1px solid var(--glass-border);
+  }
+
+  /* 按钮 */
+  .btn {
+    @apply inline-flex items-center gap-2 rounded-xl px-5 py-2.5 text-sm font-medium transition-all duration-200;
+  }
+  .btn-primary {
+    background: var(--gradient-1);
+    @apply text-white;
+    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.3);
+  }
+  .btn-primary:hover {
+    @apply -translate-y-0.5;
+    box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.35);
+  }
+  .btn-ghost {
+    background: var(--glass);
+    color: var(--ink-1);
+    border: 1px solid var(--glass-border);
+    backdrop-filter: blur(10px);
+  }
+  .btn-ghost:hover {
+    @apply -translate-y-0.5;
+    background: var(--bg-2);
+  }
+
+  /* 胶囊 */
+  .chip {
+    @apply inline-flex items-center gap-1.5 rounded-full px-3.5 py-1.5 text-sm transition-transform duration-200;
+    background: var(--glass);
+    border: 1px solid var(--glass-border);
+    color: var(--ink-2);
+    backdrop-filter: blur(10px);
+  }
+  .chip:hover {
+    @apply -translate-y-0.5;
+  }
+
+  /* 区块 */
+  .sec {
+    @apply py-10 md:py-14;
+  }
+  .sec-head {
+    @apply mb-8 text-center;
+  }
+  .sec-title {
+    @apply text-2xl font-bold md:text-3xl;
+    background: linear-gradient(135deg, var(--ink-1) 0%, #f97316 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .sec-sub {
+    @apply mx-auto mt-2 max-w-2xl text-sm md:text-base;
+    color: var(--ink-2);
+  }
+
+  /* 列表 */
+  .list-x {
+    @apply list-none space-y-0 p-0 text-sm;
+  }
+  .list-x > li {
+    @apply relative border-b py-2.5 pl-5 last:border-b-0;
+    border-color: var(--glass-border);
+    color: var(--ink-2);
+  }
+  .list-x > li::before {
+    content: "•";
+    @apply absolute left-0 font-bold;
+    color: #f97316;
+  }
+  .list-x strong {
+    color: var(--ink-1);
+  }
+
+  /* 无前缀纯文本列表（时间表用） */
+  .list-plain {
+    @apply list-none space-y-2 p-0 text-sm;
+  }
+  .list-plain > li {
+    color: var(--ink-2);
+  }
+  .list-plain strong {
+    color: var(--ink-1);
+  }
+
+  /* 内嵌小面板 */
+  .panel {
+    @apply rounded-xl p-4 text-sm;
+    background: var(--bg-2);
+  }
+  .panel-title {
+    @apply mb-2 text-sm font-semibold;
+  }
+
+  /* 正文链接 */
+  .link {
+    @apply font-medium underline decoration-dotted underline-offset-4;
+    color: #f97316;
+  }
+
+  /* 星级匹配度 */
+  .stars {
+    @apply whitespace-nowrap font-semibold tracking-tight;
+  }
+
+  /* 表格 */
+  .tbl-wrap {
+    @apply -mx-1 overflow-x-auto px-1;
+  }
+  .tbl {
+    @apply w-full border-collapse text-sm;
+  }
+  .tbl th {
+    @apply whitespace-nowrap px-3 py-3 text-left font-semibold;
+    background: var(--bg-2);
+    color: var(--ink-1);
+  }
+  .tbl td {
+    @apply px-3 py-3 align-top;
+    border-top: 1px solid var(--glass-border);
+    color: var(--ink-2);
+  }
+  .tbl td strong {
+    color: var(--ink-1);
+  }
+
+  /* 图片 */
+  .pic {
+    @apply w-full rounded-xl object-cover;
+  }
+  .pic-180 {
+    @apply h-44 w-full rounded-xl object-cover md:h-32 md:w-44;
+  }
+
+  /* 页头 hero */
+  .hero-badge {
+    @apply inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm;
+    background: var(--glass);
+    border: 1px solid var(--glass-border);
+    color: #f97316;
+    backdrop-filter: blur(10px);
+  }
+}
+
+/* =====================================================================
+   动效
+   ===================================================================== */
+@keyframes riseIn {
+  from { opacity: 0; transform: translateY(24px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+}
+.reveal.in {
+  animation: riseIn 0.6s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+.fade-in {
+  animation: fadeIn 0.6s ease both;
+}

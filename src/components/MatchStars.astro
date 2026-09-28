@@ -1,0 +1,15 @@
+---
+interface Props {
+  match: string;
+  level: 'high' | 'mid' | 'low';
+}
+
+const { match, level } = Astro.props;
+const color = { high: '#10b981', mid: '#d97706', low: '#dc2626' }[level];
+const label = { high: '高匹配', mid: '中匹配', low: '低匹配' }[level];
+---
+
+<span class="stars whitespace-nowrap" style={`color:${color}`}>
+  {match}
+  <span class="ml-1 text-xs font-normal" style="color: var(--ink-3);">{label}</span>
+</span>

@@ -1,0 +1,17 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/PageHero.astro';
+import MapPanel from '../components/MapPanel.astro';
+---
+
+<BaseLayout
+  title="高德交互地图"
+  description="长沙行程点位交互地图：按天筛选动线，点标记看评分/营业时间，一键唤起高德导航。高德瓦片底图，离线自动降级。"
+>
+  <PageHero
+    badge="真实 GCJ-02 坐标 · 零第三方库"
+    title="📍 高德交互地图"
+    sub="按 D1–D5 筛选当天点位与动线 · 每个 POI 都能一键唤起高德导航 · 离线自动降级为示意底图"
+  />
+  <MapPanel />
+</BaseLayout>

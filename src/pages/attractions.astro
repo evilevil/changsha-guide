@@ -1,0 +1,112 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/PageHero.astro';
+import MatchStars from '../components/MatchStars.astro';
+import Pic from '../components/Pic.astro';
+import { rich } from '../lib/rich';
+import {
+  attractionCards,
+  attractionConclusion,
+  attractionRows,
+} from '../data/attractions';
+
+const badgeTone = {
+  high: 'background:rgba(16,185,129,.16);color:#34d399;border:1px solid rgba(16,185,129,.4);',
+  mid: 'background:rgba(217,119,6,.16);color:#fbbf24;border:1px solid rgba(217,119,6,.4);',
+  low: 'background:rgba(120,113,108,.2);color:#d6d3d1;border:1px solid rgba(168,162,158,.4);',
+  brand: 'background:rgba(249,115,22,.16);color:#fdba74;border:1px solid rgba(249,115,22,.4);',
+} as const;
+---
+
+<BaseLayout
+  title="景点对照"
+  description="长沙景点 × 她的喜好匹配度对照表：高匹配必做、中匹配控量、低匹配直接砍。含高德距离与国庆建议。"
+>
+  <PageHero
+    badge="不是「必去清单」，是按偏好打分"
+    title="🧭 景点 × 她的喜好"
+    sub="按微博可观察偏好打分 · 高匹配才值得排进日程 · 低匹配已降级为可选或删除"
+  />
+
+  <section class="sec pt-6">
+    <div class="wrap">
+      <div class="card card-flat" style="border: 1px solid rgba(249,115,22,.45);">
+        <h2 class="mb-3 text-lg font-semibold" style="color: var(--brand);">
+          {attractionConclusion.title}
+        </h2>
+        <ul class="list-x">
+          {attractionConclusion.items.map((t) => <li set:html={rich(t)} />)}
+        </ul>
+        <p class="mt-3 text-xs leading-relaxed" style="color: var(--ink-3);">
+          {attractionConclusion.footnote}
+        </p>
+      </div>
+
+      <div class="tbl-wrap card card-flat mt-6" style="padding: 0.75rem;">
+        <table class="tbl">
+          <thead>
+            <tr>
+              <th>高德景点</th>
+              <th>匹配</th>
+              <th>对应她的哪条喜好</th>
+              <th>国庆建议</th>
+            </tr>
+          </thead>
+          <tbody>
+            {
+              attractionRows.map((row) => (
+                <tr>
+                  <td>
+                    <strong>{row.name}</strong>
+                    {row.addr && (
+                      <span class="block text-xs" style="color: var(--ink-3);">
+                        {row.addr}
+                      </span>
+                    )}
+                  </td>
+                  <td>
+                    <MatchStars match={row.match} level={row.level} />
+                  </td>
+                  <td>{row.reason}</td>
+                  <td set:html={rich(row.advice)} />
+                </tr>
+              ))
+            }
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec pt-2">
+    <div class="wrap">
+      <div class="sec-head">
+        <h2 class="sec-title" style="font-size: 1.35rem;">行程里保留的景点卡</h2>
+        <p class="sec-sub">只放高/中匹配；低匹配已降级为可选或删除</p>
+      </div>
+      <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+        {
+          attractionCards.map((card) => (
+            <div class="card">
+              <div class="card-head">
+                <h3 class="card-title">{card.title}</h3>
+                <span class="card-badge" style={badgeTone[card.badgeTone]}>
+                  {card.badge}
+                </span>
+              </div>
+              <Pic
+                name={card.photo}
+                alt={card.title}
+                class="pic mb-3 h-40"
+                sizes="(max-width: 768px) 90vw, 360px"
+              />
+              <div class="space-y-1.5 text-sm" style="color: var(--ink-2);">
+                {card.lines.map((l) => <p set:html={rich(l)} />)}
+              </div>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+</BaseLayout>

@@ -1,0 +1,84 @@
+---
+import { rich } from '../lib/rich';
+import type { FoodGroup } from '../data/food';
+import Pic from './Pic.astro';
+
+interface Props {
+  group: FoodGroup;
+}
+
+const { group } = Astro.props;
+
+const badgeStyle =
+  group.tone === 'warn'
+    ? 'background:rgba(217,119,6,.18);color:#fbbf24;border-color:rgba(217,119,6,.4);'
+    : group.tone === 'success'
+      ? 'background:rgba(16,185,129,.16);color:#34d399;border-color:rgba(16,185,129,.4);'
+      : 'background:rgba(249,115,22,.16);color:#fdba74;border-color:rgba(249,115,22,.4);';
+
+const itemTone = (tone?: string) =>
+  tone === 'bad'
+    ? 'border-left:3px solid #dc2626;'
+    : tone === 'good'
+      ? 'border-left:3px solid #10b981;'
+      : 'border-left:3px solid var(--glass-border);';
+---
+
+<div class="card">
+  <div class="card-head">
+    <h3 class="card-title">{group.title}</h3>
+    <span class="card-badge rounded-lg border px-2.5 py-1" style={badgeStyle}>{group.badge}</span>
+  </div>
+
+  {group.intro && <p class="mb-3 text-sm" style="color: var(--ink-3);">{group.intro}</p>}
+
+  <div class="space-y-4">
+    {
+      group.items.map((item) => (
+        <div class="panel" style={itemTone(item.tone)}>
+          {item.photo && <Pic name={item.photo} alt={item.name} class="pic mb-3 h-40" sizes="(max-width: 768px) 90vw, 360px" />}
+          <h4 class="mb-1.5 text-base font-semibold" style="color: var(--brand);">
+            {item.name}
+            {item.rating && <span class="ml-1.5 text-sm font-normal" style="color: var(--ink-3);">⭐{item.rating}</span>}
+          </h4>
+          <p class="text-sm leading-relaxed" style="color: var(--ink-2);">
+            {item.addr && <span>📍 {item.addr}<br /></span>}
+            {item.hours && <span>⏰ {item.hours}{item.price ? ' | ' : ''}</span>}
+            {item.price && <span>💰 {item.price}</span>}
+          </p>
+          {item.why && <p class="mt-1.5 text-sm" style="color: var(--ink-2);" set:html={rich(item.why)} />}
+          {item.order && <p class="mt-1.5 text-sm" style="color: var(--ink-3);" set:html={'点：' + rich(item.order)} />}
+        </div>
+      ))
+    }
+  </div>
+
+  {
+    group.note && (
+      <div class="panel mt-4">
+        <h4
+          class="panel-title"
+          style={group.note.titleTone === 'warn' ? 'color:#d97706' : 'color:#10b981'}
+        >
+          {group.note.title}
+        </h4>
+        <ul class="list-x">
+          {group.note.items.map((t) => (
+            <li set:html={rich(t)} />
+          ))}
+        </ul>
+      </div>
+    )
+  }
+
+  {group.alternatives && (
+    <div class="panel mt-4">
+      <h4 class="panel-title" style="color:#10b981">改去这些</h4>
+      <ul class="list-x">
+        {group.alternatives.map((t) => (
+          <li set:html={rich(t)} />
+        ))}
+      </ul>
+    </div>
+  )}
+</div>

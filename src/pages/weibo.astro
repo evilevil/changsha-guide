@@ -1,0 +1,100 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/PageHero.astro';
+import { rich } from '../lib/rich';
+import { url } from '../data/site';
+import {
+  weiboAvoid,
+  weiboFood,
+  weiboIntersection,
+  weiboMeta,
+  weiboPlay,
+  weiboQuotes,
+  weiboSample,
+  weiboTable,
+} from '../data/weibo';
+
+const cards = [weiboQuotes, weiboFood, weiboPlay, weiboAvoid];
+---
+
+<BaseLayout title="微博本地手册" description="3060 帖微博检索后的本地共识：照做/别做对照表、可引用原话、点单细化、国庆避雷。">
+  <PageHero badge="3060 帖检索 · 906 条可操作贴" title={weiboMeta.title} sub={weiboMeta.sub} />
+
+  <section class="sec pt-6">
+    <div class="wrap">
+      <div class="grid gap-4 md:grid-cols-2">
+        {
+          [weiboSample, weiboIntersection].map((block) => (
+            <div class="card card-flat">
+              <div class="card-head">
+                <h2 class="card-title">{block.title}</h2>
+                <div class="card-badge">{block.badge}</div>
+              </div>
+              <ul class="list-x">
+                {block.items.map((t) => (
+                  <li set:html={rich(t)} />
+                ))}
+              </ul>
+            </div>
+          ))
+        }
+      </div>
+
+      <div class="card card-flat mt-6">
+        <h2 class="mb-4 text-lg font-semibold">✅ 照做 / ❌ 别做（微博共识表）</h2>
+        <div class="tbl-wrap">
+          <table class="tbl">
+            <thead>
+              <tr>
+                <th>主题</th>
+                <th>照做</th>
+                <th>别做</th>
+                <th>依据强度</th>
+              </tr>
+            </thead>
+            <tbody>
+              {
+                weiboTable.map((row) => (
+                  <tr>
+                    <td><strong>{row.topic}</strong></td>
+                    <td>{row.do}</td>
+                    <td>{row.dont}</td>
+                    <td>{row.strength}</td>
+                  </tr>
+                ))
+              }
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="mt-6 grid gap-5 md:grid-cols-2">
+        {
+          cards.map((block) => (
+            <div class="card">
+              <div class="card-head">
+                <h2 class="card-title">{block.title}</h2>
+                <div class="card-badge">{block.badge}</div>
+              </div>
+              <ul class="list-x">
+                {block.items.map((t) => (
+                  <li set:html={rich(t)} />
+                ))}
+              </ul>
+            </div>
+          ))
+        }
+      </div>
+
+      <div class="card card-flat mt-6 text-center">
+        <p class="text-sm" style="color: var(--ink-2);">
+          每日行程里的「📓 微博札记」= 当天可执行版。原始数据：<code>weibo_data/changsha_local/</code>（3060 帖）
+        </p>
+        <div class="mt-4 flex flex-wrap justify-center gap-3">
+          <a href={url('/itinerary')} class="btn btn-primary">🗺️ 看全程行程</a>
+          <a href={url('/tips')} class="btn btn-ghost">💡 实用攻略</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

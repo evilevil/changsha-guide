@@ -1,0 +1,51 @@
+---
+import { Image } from 'astro:assets';
+import { img } from '../data/images';
+
+interface Props {
+  name: string;
+  alt: string;
+  class?: string;
+  sizes?: string;
+  loading?: 'lazy' | 'eager';
+  quality?: number;
+  /** 需要更高清时（如首屏大图）才覆盖 */
+  priority?: boolean;
+}
+
+const {
+  name,
+  alt,
+  class: cls = '',
+  sizes = '(max-width: 768px) 92vw, 360px',
+  loading = 'lazy',
+  quality = 76,
+  priority = false,
+} = Astro.props;
+
+// 全站统一档位：同一张图 + 同一宽度会被 Astro 去重，避免重复派生
+const STEPS = priority ? [480, 800, 1200] : [320, 640, 960];
+const CAP = priority ? 1280 : 1000;
+
+const meta = img(name);
+const widths = STEPS.filter((w) => w <= meta.width);
+const cap = Math.min(meta.width, CAP);
+if (!widths.length || widths[widths.length - 1]! < cap) widths.push(cap);
+// 显式给 width/height：一是让 src 回退到 cap（而不是原图，避免几 MB 的兜底图），二是防止布局抖动
+const fallback = widths[widths.length - 1]!;
+const fallbackHeight = Math.round((fallback * meta.height) / meta.width);
+---
+
+<Image
+  src={meta}
+  alt={alt}
+  widths={widths}
+  width={fallback}
+  height={fallbackHeight}
+  sizes={sizes}
+  format="webp"
+  quality={quality}
+  loading={loading}
+  decoding="async"
+  class={cls}
+/>

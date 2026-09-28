@@ -1,0 +1,33 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/PageHero.astro';
+import FoodGroup from '../components/FoodGroup.astro';
+import { rich } from '../lib/rich';
+import { foodGroups, foodPrinciples } from '../data/food';
+---
+
+<BaseLayout
+  title="美食"
+  description="长沙本地馆：北辰洲际周边、口味虾、粉面锅饺、正餐湘菜，以及坡子街整条避雷。高德核实地址/评分/人均。"
+>
+  <PageHero
+    badge="已砍掉全国连锁 · 高德核实地址"
+    title="🌶️ 长沙才吃得到的本地馆"
+    sub="优先「长沙才有感觉」的店 · 坡子街整条避雷 · 点菜先开口「冒辣」"
+  />
+
+  <section class="sec pt-6">
+    <div class="wrap">
+      <div class="card card-flat" style="border: 1px solid rgba(249,115,22,.45);">
+        <h2 class="mb-3 text-lg font-semibold" style="color: var(--brand);">{foodPrinciples.title}</h2>
+        <ul class="list-x">
+          {foodPrinciples.items.map((t) => <li set:html={rich(t)} />)}
+        </ul>
+      </div>
+
+      <div class="mt-6 grid gap-5 md:grid-cols-2">
+        {foodGroups.map((group) => <FoodGroup group={group} />)}
+      </div>
+    </div>
+  </section>
+</BaseLayout>

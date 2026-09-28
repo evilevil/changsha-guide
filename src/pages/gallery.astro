@@ -1,0 +1,34 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/PageHero.astro';
+import Pic from '../components/Pic.astro';
+import { galleryItems } from '../data/gallery';
+---
+
+<BaseLayout
+  title="相册"
+  description="长沙行程相册：北辰洲际、滨江文化园、湖南博物院、橘子洲、岳麓书院、文和友、黄娭毑等实景图。"
+>
+  <PageHero badge="酒店 · 机位 · 本地馆子" title="📸 相册画廊" sub="高德 POI 实景 + 本地图片 · 点开任意页都可离线浏览" />
+
+  <section class="sec pt-6">
+    <div class="wrap grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      {
+        galleryItems.map((item) => (
+          <figure class="card card-flat" style="margin:0;">
+            <Pic
+              name={item.name}
+              alt={item.title}
+              class="pic h-48"
+              sizes="(max-width: 640px) 90vw, (max-width: 1024px) 45vw, 360px"
+            />
+            <figcaption class="mt-3">
+              <p class="m-0 text-base font-semibold">{item.title}</p>
+              <p class="m-0 text-sm" style="color: var(--ink-3);">{item.caption}</p>
+            </figcaption>
+          </figure>
+        ))
+      }
+    </div>
+  </section>
+</BaseLayout>

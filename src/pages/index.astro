@@ -1,0 +1,224 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import MapPanel from '../components/MapPanel.astro';
+import Pic from '../components/Pic.astro';
+import { rich } from '../lib/rich';
+import { nav, site, url } from '../data/site';
+import { departCards } from '../data/depart';
+import { days, hotelIntro, preferenceCard, todayBrief, weiboSignal } from '../data/itinerary';
+import { extraAvoid } from '../data/pois';
+
+const quickLinks = nav.filter((n) => n.href !== '/');
+---
+
+<BaseLayout title={`${site.hero.title} · ${site.dates}`} suffix={false}>
+  {/* ---------------- Hero ---------------- */}
+  <section class="relative overflow-hidden pb-8 pt-10 md:pb-12 md:pt-16">
+    <div
+      class="pointer-events-none absolute inset-0 -z-10"
+      style="background: radial-gradient(circle at 50% 0%, rgba(249,115,22,.16), transparent 62%);"
+    >
+    </div>
+    <div class="wrap text-center">
+      <div class="hero-badge fade-in">
+        <span aria-hidden="true">🚄</span>
+        {site.hero.badge}
+      </div>
+      <h1 class="mt-5 text-4xl font-bold leading-tight md:text-6xl">
+        <span
+          style="background: linear-gradient(135deg, var(--ink-1) 0%, #f97316 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;"
+          >{site.hero.title}</span
+        >
+      </h1>
+      <p class="mt-3 text-lg font-semibold" style="color: var(--brand);">{site.hero.dates}</p>
+      <p class="mx-auto mt-4 max-w-xl text-sm md:text-base" style="color: var(--ink-2);">
+        {site.hero.sub}<br />{site.hero.sub2}
+      </p>
+
+      <div class="mt-6 flex flex-wrap justify-center gap-2.5">
+        {site.hero.chips.map((c) => <span class="chip">{c}</span>)}
+      </div>
+
+      <div class="mt-7 flex flex-wrap justify-center gap-3">
+        <a href={url('/map')} class="btn btn-primary"><span aria-hidden="true">📍</span> 高德交互地图</a>
+        <a href={url('/itinerary')} class="btn btn-ghost"><span aria-hidden="true">🗺️</span> 全程行程</a>
+        <a href={url('/zhangjiajie')} class="btn btn-ghost"><span aria-hidden="true">⛰️</span> 张家界</a>
+        <a href={url('/food')} class="btn btn-ghost"><span aria-hidden="true">🌶️</span> 本地吃饭</a>
+        <a href={url('/spots')} class="btn btn-ghost"><span aria-hidden="true">📷</span> 打卡机位</a>
+      </div>
+    </div>
+  </section>
+
+  {/* ---------------- 今日速览 ---------------- */}
+  <section class="sec pt-4">
+    <div class="wrap">
+      <div class="card card-flat fade-in">
+        <div class="card-head">
+          <h2 class="card-title">📅 今日速览</h2>
+          <div class="card-badge" id="currentDate">加载中…</div>
+        </div>
+        <p id="todayBrief" class="text-sm" style="color: var(--ink-2);">
+        根据当前日期自动显示当日建议 · 覆盖 9.29–10.4
+        </p>
+        <label class="mt-4 flex items-center gap-2 text-sm" style="color: var(--ink-3);">
+          <input type="checkbox" id="holidayMode" checked />
+          <span>节日模式（默认开：更慢、更少挤）</span>
+        </label>
+      </div>
+    </div>
+  </section>
+
+  {/* ---------------- 全程概览 ---------------- */}
+  <section class="sec pt-2">
+    <div class="wrap">
+      <div class="sec-head">
+        <h2 class="sec-title">🗺️ 全程概览</h2>
+        <p class="sec-sub">长沙两晚换宿 · 武陵源军地坪 · 每天标「必做 / 可跳过」· 节日 +30</p>
+      </div>
+
+      <div class="card card-flat mb-6 grid items-center gap-4 md:grid-cols-[200px_1fr]">
+        <Pic
+          name={hotelIntro.photo}
+          alt={hotelIntro.name}
+          class="pic h-44 w-full md:h-32 md:w-44"
+          sizes="(max-width: 768px) 90vw, 200px"
+        />
+        <div>
+          <h3 class="m-0 mb-2 text-lg font-semibold" style="color: var(--brand);">{hotelIntro.name}</h3>
+          <ul class="list-x">
+            {hotelIntro.items.map((t) => <li set:html={rich(t)} />)}
+          </ul>
+        </div>
+      </div>
+
+      <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+        {
+          days.map((d) => (
+            <a href={`${url('/itinerary')}#${d.id}`} class="card group block">
+              <div class="mb-1.5 flex items-center justify-between gap-2">
+                <span class="text-xs font-bold tracking-wider" style="color: var(--brand);">
+                  D{d.dayNum} · {d.date}（{d.weekday}）
+                </span>
+                <span class="card-badge">{d.badge}</span>
+              </div>
+              <h3 class="text-base font-semibold leading-snug transition-colors group-hover:text-brand">
+                {d.title}
+              </h3>
+              {d.summary && (
+                <p class="mt-1.5 text-sm" style="color: var(--ink-3);" set:html={rich(d.summary)} />
+              )}
+            </a>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  {/* ---------------- 出发与天气 ---------------- */}
+  <section class="sec pt-2">
+    <div class="wrap">
+      <div class="sec-head">
+        <h2 class="sec-title">🚄 杭州出发 + 天气</h2>
+        <p class="sec-sub">高德实时预报（撰写时）· 10 月初气候参考</p>
+      </div>
+      <div class="grid gap-4 md:grid-cols-3">
+        {
+          departCards.map((c) => (
+            <div class="card">
+              <div class="card-head">
+                <h3 class="card-title">{c.title}</h3>
+                <div class="card-badge">{c.badge}</div>
+              </div>
+              <ul class="list-x">
+                {c.items.map((t) => (
+                  <li set:html={rich(t)} />
+                ))}
+              </ul>
+              {c.footnote && (
+                <p class="mt-3 text-xs leading-relaxed" style="color: var(--ink-3);">{c.footnote}</p>
+              )}
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  {/* ---------------- 按她的喜好改过 ---------------- */}
+  <section class="sec pt-2">
+    <div class="wrap">
+      <div class="card card-flat" style="border: 1px solid rgba(249,115,22,.5);">
+        <h2 class="mb-2 text-lg font-semibold" style="color: var(--brand);">{preferenceCard.title}</h2>
+        <p class="mb-3 text-xs" style="color: var(--ink-3);" set:html={rich(preferenceCard.source)} />
+        <ul class="list-x">
+          {preferenceCard.items.map((t) => <li set:html={rich(t)} />)}
+        </ul>
+      </div>
+
+      <div class="card card-flat mt-4">
+        <h2 class="mb-2 text-lg font-semibold" style="color: var(--brand);">{weiboSignal.title}</h2>
+        <p class="text-sm" style="color: var(--ink-3);" set:html={rich(weiboSignal.body)} />
+        <a href={url('/weibo')} class="link mt-3 inline-block text-sm">去看微博本地手册 →</a>
+      </div>
+    </div>
+  </section>
+
+  {/* ---------------- 地图（首页用紧凑版，完整内容在 /map） ---------------- */}
+  <MapPanel compact />
+
+  {/* ---------------- 快速入口 ---------------- */}
+  <section class="sec">
+    <div class="wrap">
+      <div class="sec-head">
+        <h2 class="sec-title">🧭 继续逛</h2>
+        <p class="sec-sub">内容已拆成独立页面，按需打开，手机流量更省</p>
+      </div>
+      <div class="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+        {
+          quickLinks.map((item) => (
+            <a href={url(item.href)} class="card group flex items-center gap-3">
+              <span class="text-2xl" aria-hidden="true">{item.icon}</span>
+              <span class="font-semibold transition-colors group-hover:text-brand">{item.label}</span>
+            </a>
+          ))
+        }
+      </div>
+
+      <div class="card card-flat mt-6">
+        <div class="card-head">
+          <h3 class="card-title">⚠️ 明确避雷（已排除在动线外）</h3>
+          <div class="card-badge">不进</div>
+        </div>
+        <ul class="list-x">
+          <li><strong>坡子街（整条）</strong>：游客密度高、踩雷店多；微博避雷贴约 28 次。</li>
+          {extraAvoid.map((t) => <li set:html={rich(t)} />)}
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <script is:inline define:vars={{ briefs: todayBrief }}>
+    (function () {
+      var el = document.getElementById('todayBrief');
+      var badge = document.getElementById('currentDate');
+      var mode = document.getElementById('holidayMode');
+      if (!el) return;
+      var now = new Date();
+      var update = function () {
+        var key = now.getMonth() + 1 + '-' + now.getDate();
+        var base = briefs[key] || '查看完整长沙行程安排';
+        var tip = mode && mode.checked ? '（节日模式：各节点预留 +30 分钟，避开人流高峰）' : '';
+        el.textContent = '今日建议：' + base + tip;
+      };
+      if (badge) {
+        badge.textContent = now.toLocaleDateString('zh-CN', {
+          month: 'long',
+          day: 'numeric',
+          weekday: 'short',
+        });
+      }
+      update();
+      mode && mode.addEventListener('change', update);
+    })();
+  </script>
+</BaseLayout>

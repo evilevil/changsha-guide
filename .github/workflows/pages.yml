@@ -15,27 +15,44 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  deploy:
+  build:
     runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
 
       - name: 启用 Pages（已开启时无操作）
         continue-on-error: true
         uses: actions/configure-pages@v5
 
-      - name: 只发布单文件
-        run: |
-          mkdir -p _site
-          cp index.html _site/index.html
-          touch _site/.nojekyll
+      - name: 安装依赖
+        run: pnpm install --frozen-lockfile
+
+      - name: 构建 Astro 站点
+        run: pnpm build
+
+      # Astro 产物含 _astro/ 目录，需要 .nojekyll 才能被 Pages 正常伺服
+      - name: 关闭 Jekyll 处理
+        run: touch dist/.nojekyll
 
       - uses: actions/upload-pages-artifact@v3
         with:
-          path: _site
+          path: dist
 
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
       - id: deployment
         uses: actions/deploy-pages@v4

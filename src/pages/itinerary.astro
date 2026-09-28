@@ -1,0 +1,69 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/PageHero.astro';
+import DayCard from '../components/DayCard.astro';
+import Pic from '../components/Pic.astro';
+import { rich } from '../lib/rich';
+import { url } from '../data/site';
+import { days, hotelIntro, preferenceCard, weiboSignal } from '../data/itinerary';
+---
+
+<BaseLayout
+  title="全程行程"
+  description="杭州夜抵长沙 → 橘洲岳麓换宿 → 省博赴张家界 → 武陵源峰林 → 10/4 晚机飞上海。每天标「必做 / 可跳过」，含时间表与砍项口令。"
+>
+  <PageHero
+    badge="诺雅 → 洲际 → 军地坪 · 节日 +30"
+    title="🗺️ 全程行程 D0–D5"
+    sub="9/29 夜抵 · 9/30 橘洲+书院 · 10/1 省博赴张 · 10/2–10/3 峰林 · 10/4 赶机飞沪"
+  />
+
+  <div class="wrap grid gap-4 pt-6 md:grid-cols-2">
+    <div class="card card-flat grid items-center gap-4 md:grid-cols-[180px_1fr]">
+      <Pic
+        name={hotelIntro.photo}
+        alt={hotelIntro.name}
+        class="pic h-44 w-full md:h-28 md:w-44"
+        sizes="(max-width: 768px) 90vw, 180px"
+      />
+      <div>
+        <h2 class="mb-1.5 text-base font-semibold" style="color: var(--brand);">{hotelIntro.name}</h2>
+        <ul class="list-x">
+          {hotelIntro.items.map((t) => <li set:html={rich(t)} />)}
+        </ul>
+      </div>
+    </div>
+
+    <div class="card card-flat" style="border: 1px solid rgba(249,115,22,.5);">
+      <h2 class="mb-2 text-base font-semibold" style="color: var(--brand);">{preferenceCard.title}</h2>
+      <p class="mb-2 text-xs" style="color: var(--ink-3);" set:html={rich(preferenceCard.source)} />
+      <ul class="list-x">
+        {preferenceCard.items.slice(0, 3).map((t) => <li set:html={rich(t)} />)}
+      </ul>
+      <p class="mt-2 text-xs" style="color: var(--ink-3);">
+        武陵源细则见
+        <a class="link" href={url('/zhangjiajie')}>张家界专页</a>
+        ；微博锚点见
+        <a class="link" href={url('/weibo')}>微博本地手册</a>。
+      </p>
+    </div>
+  </div>
+
+  <div class="wrap pt-4">
+    <div class="card card-flat">
+      <h2 class="mb-2 text-base font-semibold" style="color: var(--brand);">{weiboSignal.title}</h2>
+      <p class="text-sm" style="color: var(--ink-3);" set:html={rich(weiboSignal.body)} />
+    </div>
+  </div>
+
+  <section class="sec pt-8">
+    <div class="wrap space-y-5">
+      {days.map((day, i) => <DayCard day={day} index={i} />)}
+    </div>
+  </section>
+
+  <div class="wrap pb-6 text-center flex flex-wrap justify-center gap-3">
+    <a href={url('/zhangjiajie')} class="btn btn-ghost">⛰️ 张家界专页</a>
+    <a href={url('/map')} class="btn btn-primary">📍 在地图上看动线</a>
+  </div>
+</BaseLayout>

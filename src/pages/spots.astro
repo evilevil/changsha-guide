@@ -1,0 +1,41 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/PageHero.astro';
+import Pic from '../components/Pic.astro';
+import { rich } from '../lib/rich';
+import { spotCards } from '../data/spots';
+---
+
+<BaseLayout
+  title="打卡机位"
+  description="长沙打卡机位图鉴：橘子洲雕塑、岳麓书院门联、滨江景观塔、黄娭毑、文和友、IFS——站哪里、什么光线、怎么避开人头墙。"
+>
+  <PageHero
+    badge="站哪里 · 什么光线 · 怎么避人头"
+    title="📷 打卡机位图鉴"
+    sub="按行程顺序排好，走到就能拍 · 国庆尽量卡在 8:30 前或黄昏"
+  />
+
+  <section class="sec pt-6">
+    <div class="wrap grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+      {
+        spotCards.map((card) => (
+          <div class="card">
+            <Pic
+              name={card.photo}
+              alt={card.title}
+              class="pic mb-3"
+              sizes="(max-width: 640px) 90vw, 360px"
+            />
+            <h2 class="mb-2 text-base font-semibold">{card.title}</h2>
+            <ul class="list-x">
+              {card.items.map((t) => (
+                <li set:html={rich(t)} />
+              ))}
+            </ul>
+          </div>
+        ))
+      }
+    </div>
+  </section>
+</BaseLayout>

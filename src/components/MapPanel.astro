@@ -1,0 +1,76 @@
+---
+import '../styles/map.css';
+import { site, url } from '../data/site';
+
+interface Props {
+  /**
+   * 紧凑模式：只保留地图 + 按天筛选 + 工具条，隐藏 POI 列表/驾车实测/避雷。
+   * 首页用紧凑版，避免与 /map 页完全重复；完整内容仍留在 /map。
+   */
+  compact?: boolean;
+}
+
+const { compact = false } = Astro.props;
+---
+
+<section class="sec" id="map">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2 class="sec-title">📍 高德交互地图 · 真实坐标</h2>
+      <p class="sec-sub">
+        零依赖轻量瓦片地图引擎 · 高德底图/POI 真实坐标 · 点标记看详情，一键唤起高德导航
+      </p>
+    </div>
+
+    <div class:list={['card', 'card-flat', 'overflow-hidden', 'p-0', compact && 'gm-compact']}>
+      <div class="gm-bar">
+        <div class="gm-days" id="gmDays"></div>
+        <div class="gm-tools">
+          <span class="gm-status" id="gmStatus">底图：高德瓦片</span>
+          <button class="gm-btn" id="gmLayer">切换影像</button>
+          <button class="gm-btn" id="gmFit">全览</button>
+        </div>
+      </div>
+      <div id="gmMap" class="gl-map"></div>
+      <div class="gm-hint" id="gmHint" hidden></div>
+      <div class="gm-list" id="gmList"></div>
+    </div>
+
+    {
+      compact ? (
+        <div class="mt-4 flex flex-wrap items-center justify-center gap-3">
+          <a href={url('/map')} class="btn btn-primary">
+            <span aria-hidden="true">🧭</span> 打开完整地图（POI 列表 · 驾车实测 · 避雷）
+          </a>
+        </div>
+      ) : (
+        <div class="mt-6 grid gap-4 md:grid-cols-2">
+          <div class="card">
+            <div class="card-head">
+              <h3 class="card-title">🧭 驾车实测 · 高德基线</h3>
+              <div class="card-badge">节日请再加三成</div>
+            </div>
+            <ul class="list-x" id="gmDriveList"></ul>
+          </div>
+          <div class="card">
+            <div class="card-head">
+              <h3 class="card-title">⚠️ 明确避雷（已排除在动线外）</h3>
+              <div class="card-badge">不进</div>
+            </div>
+            <ul class="list-x" id="gmAvoidList"></ul>
+          </div>
+        </div>
+      )
+    }
+
+    <p class="mt-4 text-center text-xs leading-relaxed" style="color: var(--ink-3);">
+      {site.sourceNote}<br />
+      底图联网时显示高德真实路网；离线时自动切换为按真实经纬度绘制的示意底图，标记与导航链接仍可用。
+    </p>
+  </div>
+</section>
+
+<script>
+  import { initMap } from '../scripts/map';
+  initMap();
+</script>

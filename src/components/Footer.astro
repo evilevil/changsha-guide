@@ -1,0 +1,55 @@
+---
+import { nav, site, url } from '../data/site';
+---
+
+<footer class="no-print mt-16 border-t" style="background: var(--bg-2); border-color: var(--glass-border);">
+  <div class="wrap grid gap-8 py-10 md:grid-cols-3">
+    <div>
+      <p class="flex items-center gap-2 text-base font-bold" style="color: var(--brand);">
+        <span aria-hidden="true">🍊</span> 长沙星城游
+      </p>
+      <p class="mt-2 text-sm" style="color: var(--ink-3);">
+        {site.dates} · 杭州东 → 长沙南 · {site.hotel}
+      </p>
+      <p class="mt-3 text-xs leading-relaxed" style="color: var(--ink-3);">
+        {site.footerNote}
+      </p>
+    </div>
+
+    <div>
+      <p class="mb-3 text-sm font-semibold">页面导航</p>
+      <ul class="grid grid-cols-2 gap-1.5">
+        {
+          nav.map((item) => (
+            <li>
+              <a
+                href={url(item.href)}
+                class="text-sm transition-colors hover:opacity-80"
+                style="color: var(--ink-2);"
+              >
+                {item.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+
+    <div>
+      <p class="mb-3 text-sm font-semibold">数据与来源</p>
+      <ul class="space-y-1.5 text-xs leading-relaxed" style="color: var(--ink-3);">
+        <li>{site.sourceNote}</li>
+        <li>微博本地信号：3060 帖检索 / 906 条可操作贴。</li>
+        <li>
+          <a class="link" href={site.repo} target="_blank" rel="noopener">GitHub 仓库</a>
+          ·
+          <a class="link" href={url('/itinerary')}>完整行程</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="border-t py-5 text-center text-xs" style="border-color: var(--glass-border); color: var(--ink-3);">
+    用 Astro + Tailwind 重建 · 内容仅供本人出行参考
+  </div>
+</footer>

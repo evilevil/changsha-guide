@@ -1,60 +1,88 @@
-# 长沙五日攻略 · 单文件版
+# 长沙五日攻略 · 多页面版
 
 杭州东 → 长沙南 · 2026.10.1–10.5 · 北辰洲际为全程基地。
 
 **在线访问**：https://evilevil.github.io/changsha-guide/
 
-整个攻略就是根目录下的一个文件 `index.html`——图片、样式、脚本、地图引擎全部内联，**没有任何外部依赖**。下载到手机双击即可离线打开，也可以直接丢到任意静态服务器。
+> 仓库有两个版本：
+> - `main` —— 旧版**单文件 HTML**（图片/样式/脚本/地图引擎全部内联，可离线双击打开）。
+> - `astro` —— 本版**多页面站**，用 Astro + Tailwind 重建，内容抽成结构化数据。
 
-## 做了什么
+## 技术栈
 
-| 能力 | 说明 |
+| 层 | 选型 |
 | --- | --- |
-| 单文件自包含 | 20 张照片压成 WebP + base64 内联（按 CSS 类去重，每张只存一份），无外链字体 / CSS / JS |
-| 高德交互地图 | 自研轻量瓦片引擎（零第三方库），高德路网 / 影像双底图，真实 GCJ-02 坐标直接对齐 |
-| 一键唤起高德 | 每个 POI 都有「高德导航」深链（`uri.amap.com/navigation`）与「高德详情」（POI ID） |
-| 行程联动 | 顶部按 D1–D5 筛选，地图只显示当天标记并连出当天动线；「全览」一键回到全部 22 个点 |
-| 离线兜底 | 瓦片连续失败自动降级为按真实经纬度投影的示意底图（含湘江、行政区标注），标记与导航链接照常可用 |
-| 本地数据 | 评分 / 营业时间 / 人均 / 驾车时长均取自高德开放平台，实测于 2026-09-24 |
+| 框架 | [Astro](https://astro.build/) 7（文件路由多页面 · 默认零运行时 JS） |
+| 样式 | [Tailwind CSS](https://tailwindcss.com/) 4（`@theme` 设计令牌 + 组件层） |
+| 图片 | `astro:assets` 自动转 WebP + 响应式 srcset |
+| 地图 | 自研轻量瓦片引擎（零第三方库，高德路网/影像双底图，GCJ-02 真实坐标） |
+| 部署 | GitHub Actions → GitHub Pages |
 
-## 内容来源
+## 页面结构
 
-基于本人长沙出行攻略（含微博本地信号整理）整理，明确排除了坡子街这类游客动线，并对岳麓山登山、太平老街等与偏好冲突的点位做了显式剔除。
+```
+/            首页 = Hero + 今日速览 + 五日概览 + 出发天气 + 地图 + 入口
+/itinerary   五日行程（D1–D5 时间轴，含时间表 / 机位 / 微博札记）
+/map         高德交互地图（按天筛选动线 / 一键唤起高德导航 / 离线降级）
+/food        美食（北辰周边 · 坡子街避雷 · 口味虾 · 粉面 · 正餐）
+/attractions 景点 × 匹配度对照表 + 景点卡
+/weibo       微博本地手册（照做/别做表 + 原话 + 点单细化）
+/spots       打卡机位图鉴
+/tips        实用攻略
+/gallery     相册画廊
+```
 
-## 重新构建
+## 目录约定
 
-改 `source/` 下的源文件后：
+```
+src/
+├── assets/images/       原始照片（构建时由 astro:assets 优化）
+├── components/          Nav / Footer / PageHero / DayCard / FoodGroup / MapPanel / Pic / MatchStars
+├── data/                内容数据源（改内容只需动这里）
+│   ├── site.ts          站点信息 + 导航 + base 链接工具
+│   ├── itinerary.ts     五日行程 + 今日速览 + 酒店/偏好卡
+│   ├── depart.ts        高铁衔接 + 天气
+│   ├── food.ts          美食分组
+│   ├── attractions.ts   景点匹配度
+│   ├── spots.ts         打卡机位
+│   ├── weibo.ts         微博手册
+│   ├── gallery.ts       相册
+│   ├── pois.ts          地图 POI / 每日动线 / 分类配色
+│   └── images.ts        图片名 → ImageMetadata 注册表
+├── layouts/BaseLayout.astro
+├── lib/rich.ts          极简行内富文本（**粗体** → <strong>）
+├── pages/               多页面路由
+├── scripts/map.ts       地图引擎（从旧版 map_lite.js 迁移为 TS 模块）
+└── styles/              global.css（设计系统）· map.css（地图样式）
+```
+
+## 本地开发
 
 ```bash
-brew install webp          # 首次需要
-python3 build.py --src source --out index.html
+pnpm install
+pnpm dev        # http://localhost:4321/changsha-guide/
+pnpm build      # 产物在 dist/
+pnpm preview    # 本地预览构建产物
 ```
 
-脚本会把 `source/index.html` 模板里的 `<img>` 转成去重内联的 CSS 背景图，注入地图板块与引擎，再压缩输出到 `index.html`。
+## 改内容
 
-常用参数：
+日常改动基本只碰 `src/data/*.ts`：
 
-```bash
-# 自动挑选「体积不超 480KB」下的最高画质（例如需要发给别人或走有体积限制的托管）
-python3 build.py --max-kb 480
+- 改行程 → `itinerary.ts` 的 `days` 数组
+- 加馆子 → `food.ts` 对应分组
+- 加点位 → 同时改 `pois.ts` 的 `POIS` 与 `DAYS[].order`（地图动线依赖）
 
-# 指定画质
-python3 build.py --w 900 --q 74
-```
+`data` 里的文本支持 `**粗体**` 行内标记，由 `lib/rich.ts` 渲染。
 
-`source/` 结构：
+## 部署
 
-```
-source/
-├── index.html            # 源模板（用 <img src="images/xxx.jpg"> 引用图片）
-├── src/map_lite.js       # 地图引擎（瓦片加载 / 离线降级 / 标记 / 动线 / 弹窗）
-├── src/map.css
-├── src/map_section.html  # 地图板块 DOM，构建时注入到「天气与出发」之前
-└── images/*.jpg          # 原始照片
-```
+推送到 `main` 触发 `.github/workflows/pages.yml`：安装依赖 → `pnpm build` → 发 `dist/` 到 Pages。
+
+`astro.config.mjs` 里 `base: '/changsha-guide'` 对应项目站路径；若换到自定义域名或用户站，需要同步改掉。
 
 ## 说明
 
-- 底图瓦片来自高德，联网时显示真实路网；离线时（或在无网环境）自动切换为示意底图。
+- 底图瓦片来自高德，联网时显示真实路网；离线时自动切换为示意底图。
 - 驾车时长来自高德路径规划，实际以当日路况为准；国庆期间建议再乘 1.5–2 倍冗余。
 - 高德导航深链在手机上会尝试唤起高德 App，需手机有网。

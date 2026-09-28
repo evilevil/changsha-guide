@@ -1,0 +1,129 @@
+---
+import { rich } from '../lib/rich';
+import type { Day } from '../data/itinerary';
+import Pic from './Pic.astro';
+
+interface Props {
+  day: Day;
+  index: number;
+}
+
+const { day, index } = Astro.props;
+
+const toneStyle = {
+  day: 'background:rgba(59,130,246,.16);color:#93c5fd;border-color:rgba(59,130,246,.4);',
+  must: 'background:rgba(249,115,22,.16);color:#fdba74;border-color:rgba(249,115,22,.4);',
+  option: 'background:rgba(168,162,158,.14);color:#d6d3d1;border-color:rgba(168,162,158,.35);',
+}[day.tone ?? 'must'];
+
+const noteColor =
+  day.noteTone === 'warn' ? '#d97706' : day.noteTone === 'success' ? '#10b981' : 'var(--brand)';
+---
+
+<article class="reveal relative pl-8 md:pl-10">
+  {/* 时间轴节点 */}
+  <span
+    class="absolute left-0 top-6 grid h-6 w-6 place-items-center rounded-full text-[11px] font-bold text-white"
+    style="background: var(--gradient-1); box-shadow: 0 0 0 4px var(--bg-1);"
+    aria-hidden="true"
+  >
+    D{day.dayNum ?? index + 1}
+  </span>
+  <span
+    class="absolute bottom-0 left-[11px] top-12 w-0.5"
+    style="background: linear-gradient(180deg, rgba(249,115,22,.5), transparent);"
+    aria-hidden="true"
+  ></span>
+
+  <div class="card">
+    <div class="card-head flex-wrap">
+      <h3 class="card-title">
+        <span style="color: var(--brand);">{day.date}（{day.weekday}）</span>
+        {day.title}
+      </h3>
+      <span class="card-badge rounded-lg border px-2.5 py-1" style={toneStyle}>{day.badge}</span>
+    </div>
+
+    {
+      day.redline && (
+        <div
+          class="mb-4 rounded-xl p-3 text-sm"
+          style="background: rgba(217,119,6,.12); border-left: 3px solid #d97706;"
+        >
+          <strong style="color:#d97706">{day.redlineNote ?? '红线'}：</strong>
+          <span set:html={rich(day.redline)} />
+        </div>
+      )
+    }
+
+    {
+      day.photos.length > 0 && (
+        <div class="mb-4 grid grid-cols-2 gap-2.5 sm:grid-cols-3 lg:grid-cols-4">
+          {day.photos.map((p) => (
+            <figure class="overflow-hidden rounded-xl" style="background: var(--bg-2); margin: 0;">
+              <Pic
+                name={p.name}
+                alt={p.caption}
+                class="h-28 w-full object-cover"
+                sizes="(max-width: 640px) 45vw, 220px"
+              />
+              <figcaption class="px-2 py-1.5 text-xs" style="color: var(--ink-3);">
+                {p.caption}
+              </figcaption>
+            </figure>
+          ))}
+        </div>
+      )
+    }
+
+    {day.summary && <p class="mb-4 text-sm" style="color: var(--ink-3);" set:html={rich(day.summary)} />}
+
+    <div class="panel mb-4">
+      <h4 class="panel-title" style="color: var(--brand);">⏰ 详细时间表</h4>
+      <ul class="list-plain" style="list-style:none;padding:0;">
+        {day.schedule.map((t) => <li set:html={rich(t)} />)}
+      </ul>
+    </div>
+
+    {
+      day.photoSpots && day.photoSpots.length > 0 && (
+        <div class="panel mb-4">
+          <h4 class="panel-title" style="color:#10b981">📷 打卡机位</h4>
+          <ul class="list-x">
+            {day.photoSpots.map((t) => (
+              <li set:html={rich(t)} />
+            ))}
+          </ul>
+        </div>
+      )
+    }
+
+    {
+      day.weibo && day.weibo.length > 0 && (
+        <div class="panel mb-4" style="border-left: 3px solid var(--brand);">
+          <h4 class="panel-title" style="color: var(--brand);">
+            📓 微博札记 · D{day.dayNum ?? index + 1}
+          </h4>
+          <ul class="list-x">
+            {day.weibo.map((t) => (
+              <li set:html={rich(t)} />
+            ))}
+          </ul>
+        </div>
+      )
+    }
+
+    {
+      day.notes && day.notes.length > 0 && (
+        <div class="panel">
+          <h4 class="panel-title" style={`color:${noteColor}`}>{day.noteTitle ?? '提示'}</h4>
+          <ul class="list-x">
+            {day.notes.map((t) => (
+              <li set:html={rich(t)} />
+            ))}
+          </ul>
+        </div>
+      )
+    }
+  </div>
+</article>

@@ -1,0 +1,119 @@
+---
+import '../styles/global.css';
+import { site, url } from '../data/site';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+
+interface Props {
+  title: string;
+  description?: string;
+  /** 首页传 false，避免标题重复 */
+  suffix?: boolean;
+}
+
+const { title, description = site.description, suffix = true } = Astro.props;
+const pageTitle = suffix ? `${title} · ${site.title}` : title;
+const canonical = new URL(Astro.url.pathname, Astro.site).href;
+---
+
+<!doctype html>
+<html lang="zh-CN" data-theme="dark">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>{pageTitle}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" type="image/svg+xml" href={url('/favicon.svg')} />
+    <meta name="theme-color" content="#0c0a09" data-theme-color data-dark="#0c0a09" data-light="#ffffff" />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonical} />
+    <meta name="generator" content={Astro.generator} />
+
+    {/* 首屏前设定主题，防止闪白 */}
+    <script is:inline>
+      (function () {
+        var t = 'dark';
+        try {
+          t = localStorage.getItem('changsha-theme') || 'dark';
+        } catch (e) {}
+        var root = document.documentElement;
+        root.setAttribute('data-theme', t);
+        // 浏览器地址栏/状态栏配色跟随主题
+        var m = document.querySelector('meta[data-theme-color]');
+        if (m) m.setAttribute('content', m.getAttribute(t === 'dark' ? 'data-dark' : 'data-light'));
+      })();
+    </script>
+  </head>
+
+  <body>
+    <a
+      href="#main"
+      class="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-lg focus:bg-surface-2 focus:px-4 focus:py-2"
+      >跳到正文</a
+    >
+
+    <Nav />
+
+    <main id="main" class="pt-16">
+      <slot />
+    </main>
+
+    <Footer />
+
+    <script>
+      // 主题切换
+      const root = document.documentElement;
+      const setTheme = (t: string) => {
+        root.setAttribute('data-theme', t);
+        try {
+          localStorage.setItem('changsha-theme', t);
+        } catch (e) {}
+        const meta = document.querySelector('meta[data-theme-color]');
+        if (meta) {
+          meta.setAttribute('content', meta.getAttribute(t === 'dark' ? 'data-dark' : 'data-light') || '');
+        }
+        document.querySelectorAll('[data-theme-icon]').forEach((n) => {
+          n.textContent = t === 'dark' ? '🌙' : '☀️';
+        });
+      };
+      document.querySelectorAll('[data-theme-toggle]').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          setTheme(root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
+        });
+      });
+      document.querySelectorAll('[data-theme-icon]').forEach((n) => {
+        n.textContent = root.getAttribute('data-theme') === 'dark' ? '🌙' : '☀️';
+      });
+
+      // 移动端菜单
+      const menuBtn = document.querySelector('[data-menu-toggle]');
+      const menu = document.querySelector('[data-menu]');
+      menuBtn?.addEventListener('click', () => {
+        const open = menu?.classList.toggle('hidden');
+        menuBtn?.setAttribute('aria-expanded', String(!open));
+      });
+
+      // 滚动入场动效
+      const items = document.querySelectorAll('.reveal');
+      if ('IntersectionObserver' in window && items.length) {
+        const io = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                entry.target.classList.add('in');
+                io.unobserve(entry.target);
+              }
+            });
+          },
+          { threshold: 0.08, rootMargin: '0px 0px -60px 0px' }
+        );
+        items.forEach((el) => io.observe(el));
+      } else {
+        items.forEach((el) => el.classList.add('in'));
+      }
+    </script>
+  </body>
+</html>

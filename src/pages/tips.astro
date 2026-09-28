@@ -1,0 +1,51 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/PageHero.astro';
+import { rich } from '../lib/rich';
+import { url } from '../data/site';
+import { tipCards } from '../data/tips';
+
+const badgeTone = {
+  brand: 'background:rgba(249,115,22,.16);color:#fdba74;border:1px solid rgba(249,115,22,.4);',
+  warn: 'background:rgba(217,119,6,.16);color:#fbbf24;border:1px solid rgba(217,119,6,.4);',
+  success: 'background:rgba(16,185,129,.16);color:#34d399;border:1px solid rgba(16,185,129,.4);',
+} as const;
+---
+
+<BaseLayout
+  title="实用攻略"
+  description="真·实用秘籍：节奏与体力、国庆避堵、长沙两晚换宿、武陵源赶机、吃少踩雷、提前要订的事。"
+>
+  <PageHero
+    badge="删掉「地铁几号线」这类废话"
+    title="💡 真·实用秘籍"
+    sub="只留会影响体验的 · 节奏和体力是第一位 · 撤退永远合法"
+  />
+
+  <section class="sec pt-6">
+    <div class="wrap grid gap-5 md:grid-cols-2">
+      {
+        tipCards.map((card) => (
+          <div class="card" style={card.id === 'weibo' ? 'border:1px solid rgba(249,115,22,.45);' : ''}>
+            <div class="card-head">
+              <h2 class="card-title">{card.title}</h2>
+              <span class="card-badge" style={badgeTone[card.badgeTone ?? 'brand']}>
+                {card.badge}
+              </span>
+            </div>
+            <ul class="list-x">
+              {card.items.map((t) => (
+                <li set:html={rich(t)} />
+              ))}
+            </ul>
+            {card.link && (
+              <a href={url(card.link.href)} class="link mt-3 inline-block text-sm">
+                {card.link.label} →
+              </a>
+            )}
+          </div>
+        ))
+      }
+    </div>
+  </section>
+</BaseLayout>
